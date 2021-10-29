@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+      TZ: Asia/Tokyo
+    ports: 
+      - 3306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./database/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./database/data:/var/lib/mysql
+
+  api:
+    tty: true
+    depends_on:
+      - db
+    build: ./api
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api:/app_name
+    command: sh -c "rm -f tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
+
+  client:
+    build: 
+      context: .
+      dockerfile: ./client/dockerfile
+    environment:
+      - NODE_ENV=production node server.js
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    command: sh -c 'yarn dev'
+    ports:
+      - 8000:3000
+
+# docker-compose run --rm client yarn create next-app . --typescript
+# docker-compose run --rm api rails new . --api --databese=mysql --slip-bundle
