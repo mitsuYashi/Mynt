@@ -1,0 +1,37 @@
+@startuml
+
+class users {
+    + id : String(32)
+    ---
+    name : String(64)
+    mail : String(240)
+    uid : String()
+    timestamp : Date
+    profile : String(1024)
+    url : String()
+    
+}
+
+
+class matches {
+    + id : String(32)
+    ---
+    menta_user_id : String(32)
+    receive_user_id : String(32)
+    status : Bool(1)
+}
+
+class none {
+    + id : String(32)
+    ---
+    menta_user_id : String(32)
+    receive_user_id : String(32)
+    date : Date
+}
+
+' class chat {
+
+' }
+
+users --- matches
+@enduml
