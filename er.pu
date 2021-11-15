@@ -1,37 +1,100 @@
-@startuml
+@startuml ER
 
 class users {
     + id : String(32)
     ---
+    uuid : String(32)
     name : String(64)
-    mail : String(240)
-    uid : String()
-    timestamp : Date
+    mail : String(240) 
+    birth: Date()
     profile : String(1024)
-    url : String()
-    
+    url : String(124)
+    status : String(8)
+    timestamp : Datetime()
 }
+/'
+    date: 誕生日
+    profile: ポートフォリオ
+    url:  youtube url
+    status: mentaかclientか
+'/
 
-
-class matches {
+class review {
     + id : String(32)
     ---
     menta_user_id : String(32)
-    receive_user_id : String(32)
-    status : Bool(1)
+    client_user_id : String(32)
+    star : Int(1)
+    comment : String(1024)
+    timestamp : Datetime()
 }
+
+class tag {
+    + id : String(32)
+    ---
+    name : String(32)
+    timestamp : Datetime()
+}
+/'
+    分野
+'/
+
+class users_tag {
+    + id : String(32)
+    ---
+    user_id : String(32)
+    tag_id : String(32)
+    timestamp : Datetime()
+}
+/'
+    userとタグの関連付け
+'/  
+
+class like {
+    ' 契約前
+    + id : String(32)
+    ---
+    menta_user_id : String(32)
+    client_user_id : String(32)
+    status : Bool(1)
+    timestamp : Datetime()
+}
+/'
+    契約前
+    menta_user_id: サービス提供者
+    client_user_id: 依頼者
+    status: 1で有効0で無効
+'/
+
+class contract {
+    + id :String(32)
+    ---
+    menta_user_id: String(32)
+    client_user_id: String(32)
+    timestamp : Datetime()
+}
+/'
+    契約済み
+'/
 
 class none {
     + id : String(32)
     ---
     menta_user_id : String(32)
     receive_user_id : String(32)
-    date : Date
+    date : Date()
+    timestamp : Datetime()
 }
+/'
+    noneされた人
+    一か月表示しない
+'/
 
-' class chat {
 
-' }
-
-users --- matches
+users --- like
+like --- contract
+users --- none
+tag --- users_tag
+users --- users_tag
+users ----- review
 @enduml
