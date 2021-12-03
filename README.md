@@ -3,7 +3,7 @@
 ## 開発準備
 ` docker-compose build `
 
-` docker-compose run --rm front sh -c "yarn install" `
+<!-- ` docker-compose run --rm front sh -c "yarn" ` -->
 
 ` docker-compose up `
 
