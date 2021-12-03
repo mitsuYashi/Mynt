@@ -29,11 +29,11 @@ services:
       context: .
       dockerfile: ./client/dockerfile
     environment:
-      - NODE_ENV=production node server.js
+      # - NODE_ENV=production node server.js
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./app:/usr/src/app
-      - /usr/src/app/node_modules
+      # - /usr/src/app/node_modules
     command: sh -c 'yarn dev'
     ports:
       - 8000:3000

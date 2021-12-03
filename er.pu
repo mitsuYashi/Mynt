@@ -7,23 +7,45 @@ class users {
     name : String(64)
     mail : String(240) 
     birth: Date()
+    timestamp : Datetime()
+    status : Boolen()
+}
+/'
+    クライアント
+
+    birth: 誕生日
+    status: アカウントの有効状態
+'/
+
+class menta {
+    + id : String(32)
+    ---
+    uuid : String(32)
+    name : String(64)
+    mail : String(240)
+    birth : Date()
     profile : String(1024)
     url : String(124)
     status : String(8)
     timestamp : Datetime()
+    status : Boolen()
 }
 /'
-    date: 誕生日
+    メンター
+
     profile: ポートフォリオ
     url:  youtube url
-    status: mentaかclientか
+    status: 有効状態
+    
+    終了条件をプロフィールに明示する
+    完了せずに契約終了した場合返金処理
 '/
 
 class review {
     + id : String(32)
     ---
-    menta_user_id : String(32)
-    client_user_id : String(32)
+    menta_id : String(32)
+    user_id : String(32)
     star : Int(1)
     comment : String(1024)
     timestamp : Datetime()
@@ -50,27 +72,36 @@ class users_tag {
     userとタグの関連付け
 '/  
 
+class menta_tag {
+    + id : String(32)
+    ---
+    menta_id : String(32)
+    tag_id : String(32)
+    experience : String(32)
+    timestamp : Datetime()
+}
+
 class like {
     ' 契約前
     + id : String(32)
     ---
-    menta_user_id : String(32)
-    client_user_id : String(32)
+    menta_id : String(32)
+    user_id : String(32)
     status : Bool(1)
     timestamp : Datetime()
 }
 /'
     契約前
-    menta_user_id: サービス提供者
-    client_user_id: 依頼者
+    menta_id: サービス提供者
+    user_id: 依頼者
     status: 1で有効0で無効
 '/
 
 class contract {
     + id :String(32)
     ---
-    menta_user_id: String(32)
-    client_user_id: String(32)
+    menta_id: String(32)
+    user_id: String(32)
     timestamp : Datetime()
 }
 /'
@@ -80,8 +111,8 @@ class contract {
 class none {
     + id : String(32)
     ---
-    menta_user_id : String(32)
-    receive_user_id : String(32)
+    menta_id : String(32)
+    user_id : String(32)
     date : Date()
     timestamp : Datetime()
 }
@@ -90,11 +121,26 @@ class none {
     一か月表示しない
 '/
 
+class creditcard {
+    user_id : String(32)
+    number : String(32)
+    name : String(128)
+    limit : String(16)
+    code : String(4)
+}
+
 
 users --- like
-like --- contract
+menta --- like
+users --- contract
+menta --- contract
 users --- none
-tag --- users_tag
-users --- users_tag
-users ----- review
+menta ---- none
+tag ---- users_tag
+tag ---- menta_tag
+users ---- users_tag
+menta --- menta_tag
+users --- review
+menta --- review
+users --- creditcard
 @enduml
