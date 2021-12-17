@@ -1,19 +1,22 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+// import "firebase/auth";
+// import "firebase/firestore";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAPiJHG_iYo-DOGasX1D4bJKMx2w7UmdkI",
-  authDomain: "hew-project-25587.firebaseapp.com",
-  projectId: "hew-project-25587",
-  storageBucket: "hew-project-25587.appspot.com",
-  messagingSenderId: "821584206223",
-  appId: "1:821584206223:web:9ca05f950c4846350a53fa",
-  measurementId: "G-CRJCPMV4JK",
+const config = {
+  apiKey: "AIzaSyCrPWdNBx4hszLkBOy4dG4Cw6XrdZaO0W8",
+  authDomain: "mynt-hew-project.firebaseapp.com",
+  projectId: "mynt-hew-project",
+  storageBucket: "mynt-hew-project.appspot.com",
+  messagingSenderId: "701659823314",
+  appId: "1:701659823314:web:b23bc42792af4ce0c3c10b",
+  measurementId: "${config.measurementId}"
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// export const firebase = !fb.apps.length ? fb.initializeApp(config) : fb.app();
+// export const firestore = firebase.firestore();
 
-export default firebase;
+export default initializeApp(config);
+
+
+// export default firebase;

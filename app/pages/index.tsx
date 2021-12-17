@@ -1,6 +1,9 @@
 import axios from "axios";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
+import firebase from "../components/firebase";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { async } from "@firebase/util";
 
 interface State {
   num: number[];
@@ -11,29 +14,31 @@ const initialState: State = {
 };
 
 const Home: NextPage = () => {
-  const [num, setNum] = useState(initialState.num);
+  useEffect(() => {
+    console.log(firebase);
+  }, []);
 
-  const handleClick = async () => {
+  const clickButton = () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
     try {
-      const res = await axios.get("http://localhost:3000/example").then(function (res) {
-        console.log(res.data);
-        setNum(res.data.num);
-      });
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          console.log("Googleアカウントでログインしました。");
+          console.log(result.user);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (err) {
       console.log(err);
     }
-  }
-
-  useEffect(() => {
-  }, []);
+  };
 
   return (
     <div>
-      <p>{num}</p>
-      <button onClick={handleClick}>取得</button>
-      <p>test</p>
-      <p>test2</p>
-      <p>test3</p>
+      <h1>test</h1>
+      <button onClick={clickButton}>Googleでログイン</button>
     </div>
   );
 };
