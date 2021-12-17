@@ -8,5 +8,5 @@ module.exports = {
     }
     return config
   },
-  
+  "presets": ["next/babel"]
 }

@@ -40,3 +40,4 @@ services:
 
 # docker-compose run --rm client yarn create next-app . --typescript
 # docker-compose run --rm api rails new . --api --databese=mysql --slip-bundle
+# docker-compose run --rm client yarn add next@canary
