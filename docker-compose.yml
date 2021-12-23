@@ -34,7 +34,7 @@ services:
     volumes:
       - ./app:/usr/src/app
       # - /usr/src/app/node_modules
-    command: sh -c 'yarn dev'
+    command: sh -c 'yarn && yarn dev'
     ports:
       - 8000:3000
 
