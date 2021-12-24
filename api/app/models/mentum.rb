@@ -1,0 +1,2 @@
+class Mentum < ApplicationRecord
+end

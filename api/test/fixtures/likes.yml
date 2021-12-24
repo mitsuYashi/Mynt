@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  menta_id: MyString
+  user_id: MyString
+  status: 
+
+two:
+  menta_id: MyString
+  user_id: MyString
+  status: 
