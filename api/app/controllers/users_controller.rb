@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     def index
-
+        render json: create_user_param[:uid]
     end
 
     def create
