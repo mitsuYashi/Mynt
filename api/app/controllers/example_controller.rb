@@ -6,10 +6,15 @@ class ExampleController < ApplicationController
 
     def create
         user = User.new(user_create_params);
+        if user.save
+            render json:{ status: "SUCCESS" }
+        else 
+            render json:{ status: 422, error: user.errors }
+        end
     end
 
     def show
-
+        
     end
 
     def update

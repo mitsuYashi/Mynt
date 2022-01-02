@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  name: MyString
+  mail: MyString
+  birth: 2021-12-24
+  status: 
+
+two:
+  uuid: MyString
+  name: MyString
+  mail: MyString
+  birth: 2021-12-24
+  status: 

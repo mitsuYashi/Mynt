@@ -26,9 +26,8 @@ class menta {
     birth : Date()
     profile : String(1024)
     url : String(124)
-    status : String(8)
-    timestamp : Datetime()
     status : Boolen()
+    timestamp : Datetime()
 }
 /'
     メンター
@@ -102,10 +101,12 @@ class contract {
     ---
     menta_id: String(32)
     user_id: String(32)
+    status: String()
     timestamp : Datetime()
 }
 /'
     契約済み
+    status: end、cancell、inProgress
 '/
 
 class none {
