@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
     def index
-        user = Menta.find_by(uid: params[uid])
+        user = User.find_by(uuid: params[uuid])
         render json: user
     end
 
     def create
-        if user = User.find_by(uid: create_user_param[:uid])
+        if user = User.find_by(uuid: create_user_param[:uuid])
         else
-            user = User.create(create_user_param, status: 1)
+            user = User.create(create_user_param)
         end
         render json: user
     end
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     private
     
     def create_user_param
-        params.require(:user).permit(:uid, :mail, :name)
+        params.require(:user).permit(:uuid, :mail, :name)
     end
 
 end
