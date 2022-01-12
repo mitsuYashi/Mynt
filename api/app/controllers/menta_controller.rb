@@ -1,8 +1,17 @@
 class MentaController < ApplicationController
+    def index
+        menta = Mentum.find_by(uuid: params[uuid])
+        render json: menta
+    end
+
     def create
-        if menta = Menta.find_by(uid: create_menta_param[:uid])
+        if user = User.find_by(uuid: create_menta_param[:uuid])
         else
-            menta = Menta.create(create_menta_param, status: 1)
+            user = User.create(create_menta_param)
+        end
+        if menta = Mentum.find_by(uuid: create_menta_param[:uuid])
+        else
+            menta = Mentum.create(create_menta_param)
         end
         render json: menta
     end
@@ -10,7 +19,7 @@ class MentaController < ApplicationController
     private
     
     def create_menta_param
-        params.require(:menta).permit(:uid, :mail, :name)
+        params.require(:menta).permit(:uuid, :mail, :name)
     end
 
 end

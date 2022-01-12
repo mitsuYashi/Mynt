@@ -26,8 +26,8 @@ class menta {
     birth : Date()
     profile : String(1024)
     url : String(124)
-    status : Boolen()
     timestamp : Datetime()
+    status : Boolen()
 }
 /'
     メンター
@@ -43,8 +43,8 @@ class menta {
 class review {
     + id : String(32)
     ---
-    menta_id : String(32)
-    user_id : String(32)
+    # menta_id : String(32)
+    # user_id : String(32)
     star : Int(1)
     comment : String(1024)
     timestamp : Datetime()
@@ -63,8 +63,8 @@ class tag {
 class users_tag {
     + id : String(32)
     ---
-    user_id : String(32)
-    tag_id : String(32)
+    # user_id : String(32)
+    # tag_id : String(32)
     timestamp : Datetime()
 }
 /'
@@ -74,8 +74,8 @@ class users_tag {
 class menta_tag {
     + id : String(32)
     ---
-    menta_id : String(32)
-    tag_id : String(32)
+    # menta_id : String(32)
+    # tag_id : String(32)
     experience : String(32)
     timestamp : Datetime()
 }
@@ -84,8 +84,8 @@ class like {
     ' 契約前
     + id : String(32)
     ---
-    menta_id : String(32)
-    user_id : String(32)
+    # menta_id : String(32)
+    # user_id : String(32)
     status : Bool(1)
     timestamp : Datetime()
 }
@@ -99,21 +99,19 @@ class like {
 class contract {
     + id :String(32)
     ---
-    menta_id: String(32)
-    user_id: String(32)
-    status: String()
+    # menta_id: String(32)
+    # user_id: String(32)
     timestamp : Datetime()
 }
 /'
     契約済み
-    status: end、cancell、inProgress
 '/
 
 class none {
     + id : String(32)
     ---
-    menta_id : String(32)
-    user_id : String(32)
+    # menta_id : String(32)
+    # user_id : String(32)
     date : Date()
     timestamp : Datetime()
 }
@@ -123,7 +121,7 @@ class none {
 '/
 
 class creditcard {
-    user_id : String(32)
+    # user_id : String(32)
     number : String(32)
     name : String(128)
     limit : String(16)
@@ -131,17 +129,17 @@ class creditcard {
 }
 
 
-users --- like
-menta --- like
-users --- contract
-menta --- contract
-users --- none
-menta ---- none
-tag ---- users_tag
-tag ---- menta_tag
-users ---- users_tag
-menta --- menta_tag
-users --- review
-menta --- review
-users --- creditcard
+users -{ like
+menta --{ like
+contract }-- users
+menta --{ contract
+none }-- users
+menta --{ none
+tag --{ users_tag
+menta_tag }-- tag
+users --{ users_tag
+menta --{ menta_tag
+review }-- users
+menta --{ review
+users -- creditcard
 @enduml

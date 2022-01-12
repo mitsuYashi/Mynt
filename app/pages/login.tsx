@@ -1,44 +1,79 @@
 import axios from "axios";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import firebase from "../components/firebase";
+import Router from "next/router";
+
+import { firebase } from "../components/firebase";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { async } from "@firebase/util";
 
-interface State {
-  num: number[];
-}
-
-const initialState: State = {
-  num: [],
-};
+import { RepositoryFactory } from "../repositories/RepositoryFactory";
+const userRepository = RepositoryFactory.get("users");
+const mentaRepository = RepositoryFactory.get("menta");
 
 const Login: NextPage = () => {
   useEffect(() => {
-    console.log(firebase);
+    // console.log(firebase);
   }, []);
 
-  const clickButton = () => {
+  const userPost = async (uid: string, mail: string, username: string) => {
+    const createResponse = await userRepository.post({ user: {
+      uuid: uid,
+      mail: mail,
+      name: username,
+    }});
+  };
+  const mentaPost = async (uid: string, mail:string, username: string) => {
+    const createResponse = await mentaRepository.post({menta: {
+      uuid: uid,
+      mail: mail,
+      name: username,
+    }});
+  };
+
+  const userButton = () => {
     const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    try {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          // console.log("Googleアカウントでログインしました。");
-          console.log(result.user);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    const auth = getAuth(firebase);
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (credential == null) {
+        } else {
+          const token = credential.accessToken;
+          const user = result.user;
+          userPost(user.uid, user.email ? user.email : '', user.displayName ? user.displayName: 'unknown');
+          Router.push("/home");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const mentaButton = () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth(firebase);
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (credential == null) {
+        } else {
+          const token = credential.accessToken;
+          const user = result.user;
+          mentaPost(user.uid, user.email ? user.email : '', user.displayName ? user.displayName: 'unknown');
+          Router.push("/home");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
     <div>
-      <h1>test</h1>
-      <button onClick={clickButton}>Googleでログイン</button>
+      <h1>login</h1>
+      <button onClick={mentaButton}>メンターで登録</button>
+      <button onClick={userButton}>一般ユーザーで登録</button>
     </div>
   );
 };
