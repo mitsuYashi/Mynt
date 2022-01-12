@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :example
   resources :users
   resources :menta
+  resources :like
 end
