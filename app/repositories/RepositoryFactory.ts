@@ -1,11 +1,16 @@
 import matchRepository from "./matchRepository";
+import mentaRepository from "./mentaRepository";
 import userRepository from "./userRepository";
 
 const repositories = {
-  user: userRepository,
+  users: userRepository,
+  menta: mentaRepository,
   match: matchRepository,
 };
 
-export const RepositryFactory = {
-  get: (name: string) => repositories[name],
+type Value<T, U extends keyof T> = T[U];
+
+export const RepositoryFactory = {
+  get: <T extends keyof typeof repositories>(name: T): Value<typeof repositories, T> => repositories[name],
 };
+
