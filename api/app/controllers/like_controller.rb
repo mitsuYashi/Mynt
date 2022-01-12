@@ -4,12 +4,7 @@ class LikeController < ApplicationController
     end
 
     def create
-        @like = Object.new(params[:status])
-        if @like.save
-            render json: @like
-        else
-            render json: @like.error, status: 422
-        end
+        Like.where(user_id: {uuid}, menta_id: {uuid})
     end
     
 
