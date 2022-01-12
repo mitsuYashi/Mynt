@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_052442) do
+ActiveRecord::Schema.define(version: 2022_01_12_053035) do
 
   create_table "contracts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menta_id"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_052442) do
     t.date "birth"
     t.string "profile"
     t.string "url"
-    t.boolean "status"
+    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mail"], name: "index_menta_on_mail", unique: true
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_052442) do
     t.string "name"
     t.string "mail"
     t.date "birth"
-    t.boolean "status"
+    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mail"], name: "index_users_on_mail", unique: true
