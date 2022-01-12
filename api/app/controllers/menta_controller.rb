@@ -1,4 +1,9 @@
 class MentaController < ApplicationController
+    def index
+        menta = Menta.find_by(uid: params[uid])
+        render json: menta
+    end
+
     def create
         if menta = Menta.find_by(uid: create_menta_param[:uid])
         else

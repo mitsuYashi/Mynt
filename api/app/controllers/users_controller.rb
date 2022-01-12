@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     def index
-        render json: create_user_param[:uid]
+        user = Menta.find_by(uid: params[uid])
+        render json: user
     end
 
     def create
