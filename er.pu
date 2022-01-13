@@ -128,18 +128,18 @@ class creditcard {
     code : String(4)
 }
 
-
+users }- menta
 users -{ like
 menta --{ like
-contract }-- users
-menta --{ contract
+contract --{ users
+contract --{ menta
 none }-- users
-menta --{ none
+none --{ menta
 tag --{ users_tag
 menta_tag }-- tag
-users --{ users_tag
+users -{ users_tag
 menta --{ menta_tag
 review }-- users
 menta --{ review
-users -- creditcard
+creditcard -- users
 @enduml
