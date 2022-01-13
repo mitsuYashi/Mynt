@@ -1,20 +1,23 @@
 class LikeController < ApplicationController
     def index
-        render json: create_like_param[:status]
+        likes = Like.where(menta_id: params[:menta_id], status: true)
+        render json: likes
     end
 
     def create
-        Like.where(user_id: {uuid}, menta_id: {uuid})
-    end
-    
+        if like = Like.where(user_id: create_like_param[:user_id], menta_id: create_like_param[:menta_id])
+            if like.status == false
+                like.update(status: true)
+            else
+                like = Like.create(create_like_param)
+            end
+        end
 
-    def show
-        @like = Like.find(params[:id])
     end
 
     private
 
     def create_like_param
-        params.require(:like).permit(:status)
+        params.require(:like).permit(:user_id, :menta_id)
     end
 end
