@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :users
   resources :menta
   resources :like
+  resources :tags
 end
