@@ -1,6 +1,6 @@
 class UsersTagsController < ApplicationController
   def index
-    user_tags = User_tags.all()
+    user_tag = User_tag.where(params[:user_id])
     render json: user_tags
   end
 
