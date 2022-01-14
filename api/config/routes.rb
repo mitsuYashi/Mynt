@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :menta
   resources :like
   resources :tags
+  resources :menta_tags
 end
