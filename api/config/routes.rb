@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   resources :users
   resources :menta
   resources :like
+  resources :tags
+  resources :menta_tags
+  resources :users_tags
   resources :nones
 end
