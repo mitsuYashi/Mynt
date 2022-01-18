@@ -128,7 +128,7 @@ class creditcard {
     code : String(4)
 }
 
-users }- menta
+users - menta
 users -{ like
 menta --{ like
 contract --{ users
