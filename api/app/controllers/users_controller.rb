@@ -1,21 +1,20 @@
 class UsersController < ApplicationController
     def index
-        user = User.find_by(uuid: params[uuid])
-        render json: user
+        if user = User.eager_load(:mentum).eager_load(:client)
+            render json: user
+        end
     end
 
     def create
-        if user = User.find_by(uuid: create_user_param[:uuid])
-        else
-            user = User.create(create_user_param)
+        if user = User.find_by(uuid: params[:uuid]).nil?
+            user = User.create(uuid: params[:uuid], name: params[:name], mail: params[:mail])
         end
-        render json: user
     end
 
     private
     
     def create_user_param
-        params.require(:user).permit(:uuid, :mail, :name)
+        params.require(:user).permit(:uuid, :name, :mail)
     end
 
 end
