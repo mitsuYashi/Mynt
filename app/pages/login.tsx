@@ -5,10 +5,9 @@ import Router from "next/router";
 
 import { firebase } from "../components/firebase";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { async } from "@firebase/util";
 
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
-const userRepository = RepositoryFactory.get("users");
+const clientRepository = RepositoryFactory.get("client");
 const mentaRepository = RepositoryFactory.get("menta");
 
 const Login: NextPage = () => {
@@ -16,19 +15,23 @@ const Login: NextPage = () => {
     // console.log(firebase);
   }, []);
 
-  const userPost = async (uid: string, mail: string, username: string) => {
-    const createResponse = await userRepository.post({ user: {
-      uuid: uid,
-      mail: mail,
-      name: username,
-    }});
+  const clientPost = async (uid: string, mail: string, username: string) => {
+    const createResponse = await clientRepository.post({
+      client: {
+        uuid: uid,
+        mail: mail,
+        name: username,
+      },
+    });
   };
-  const mentaPost = async (uid: string, mail:string, username: string) => {
-    const createResponse = await mentaRepository.post({menta: {
-      uuid: uid,
-      mail: mail,
-      name: username,
-    }});
+  const mentaPost = async (uid: string, mail: string, username: string) => {
+    const createResponse = await mentaRepository.post({
+      menta: {
+        uuid: uid,
+        mail: mail,
+        name: username,
+      },
+    });
   };
 
   const userButton = () => {
@@ -41,7 +44,11 @@ const Login: NextPage = () => {
         } else {
           const token = credential.accessToken;
           const user = result.user;
-          userPost(user.uid, user.email ? user.email : '', user.displayName ? user.displayName: 'unknown');
+          clientPost(
+            user.uid,
+            user.email ? user.email : "",
+            user.displayName ? user.displayName : "unknown"
+          );
           Router.push("/home");
         }
       })
@@ -60,7 +67,11 @@ const Login: NextPage = () => {
         } else {
           const token = credential.accessToken;
           const user = result.user;
-          mentaPost(user.uid, user.email ? user.email : '', user.displayName ? user.displayName: 'unknown');
+          mentaPost(
+            user.uid,
+            user.email ? user.email : "",
+            user.displayName ? user.displayName : "unknown"
+          );
           Router.push("/home");
         }
       })

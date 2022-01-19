@@ -1,33 +1,37 @@
 @startuml ER
 
 class users {
-    + id : String(32)
+    + uuid : String(32)
     ---
-    uuid : String(32)
     name : String(64)
-    mail : String(240) 
-    birth: Date()
+    mail : String(240)
+    birth : Data()
     timestamp : Datetime()
+}
+/'
+    全ユーザー
+    birth: 誕生日
+'/
+
+class client {
+    + uuid : String(32)
+    ---
     status : Boolen()
+    timestamp : Datetime()
 }
 /'
     クライアント
-
-    birth: 誕生日
-    status: アカウントの有効状態
+    status: 有効状態
+    false or true
 '/
 
 class menta {
-    + id : String(32)
+    + uuid : String(32)
     ---
-    uuid : String(32)
-    name : String(64)
-    mail : String(240)
-    birth : Date()
     profile : String(1024)
     url : String(124)
-    timestamp : Datetime()
     status : Boolen()
+    timestamp : Datetime()
 }
 /'
     メンター
@@ -44,7 +48,7 @@ class review {
     + id : String(32)
     ---
     # menta_id : String(32)
-    # user_id : String(32)
+    # client_id : String(32)
     star : Int(1)
     comment : String(1024)
     timestamp : Datetime()
@@ -60,15 +64,15 @@ class tag {
     分野
 '/
 
-class users_tag {
+class client_tag {
     + id : String(32)
     ---
-    # user_id : String(32)
+    # client_id : String(32)
     # tag_id : String(32)
     timestamp : Datetime()
 }
 /'
-    userとタグの関連付け
+    clientとタグの関連付け
 '/  
 
 class menta_tag {
@@ -85,14 +89,14 @@ class like {
     + id : String(32)
     ---
     # menta_id : String(32)
-    # user_id : String(32)
+    # client_id : String(32)
     status : Bool(1)
     timestamp : Datetime()
 }
 /'
     契約前
     menta_id: サービス提供者
-    user_id: 依頼者
+    client_id: 依頼者
     status: 1で有効0で無効
 '/
 
@@ -100,7 +104,7 @@ class contract {
     + id :String(32)
     ---
     # menta_id: String(32)
-    # user_id: String(32)
+    # client_id: String(32)
     timestamp : Datetime()
 }
 /'
@@ -111,7 +115,7 @@ class none {
     + id : String(32)
     ---
     # menta_id : String(32)
-    # user_id : String(32)
+    # client_id : String(32)
     date : Date()
     timestamp : Datetime()
 }
@@ -120,26 +124,27 @@ class none {
     一か月表示しない
 '/
 
-class creditcard {
-    # user_id : String(32)
-    number : String(32)
-    name : String(128)
-    limit : String(16)
-    code : String(4)
-}
+' class creditcard {
+'     # client_id : String(32)
+'     number : String(32)
+'     name : String(128)
+'     limit : String(16)
+'     code : String(4)
+' }
 
+client - users
 users - menta
-users -{ like
+client --{ like
 menta --{ like
-contract --{ users
+contract --{ client
 contract --{ menta
-none }-- users
+none }-- client
 none --{ menta
-tag --{ users_tag
+tag --{ client_tag
 menta_tag }-- tag
-users -{ users_tag
+client -{ client_tag
 menta --{ menta_tag
-review }-- users
+client }-- review 
 menta --{ review
-creditcard -- users
+' creditcard }-- client
 @enduml

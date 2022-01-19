@@ -1,6 +1,6 @@
 import Repository from "./Repository";
 
-const resouce: string = "/menta";
+const resouce: string = "/client";
 
 export default {
   get(payload: Object) {
