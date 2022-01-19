@@ -10,11 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_12_053035) do
+ActiveRecord::Schema.define(version: 2022_01_19_113643) do
+
+  create_table "client_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "client_id"
+    t.string "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "clients", primary_key: "user_id", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.boolean "status", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_clients_on_user_id", unique: true
+  end
 
   create_table "contracts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menta_id"
-    t.string "user_id"
+    t.string "client_id"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,24 +46,19 @@ ActiveRecord::Schema.define(version: 2022_01_12_053035) do
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menta_id"
-    t.string "user_id"
+    t.string "client_id"
     t.boolean "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "menta", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "uuid"
-    t.string "name"
-    t.string "mail"
-    t.date "birth"
+  create_table "menta", primary_key: "user_id", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "profile"
     t.string "url"
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["mail"], name: "index_menta_on_mail", unique: true
-    t.index ["uuid"], name: "index_menta_on_uuid", unique: true
+    t.index ["user_id"], name: "index_menta_on_user_id", unique: true
   end
 
   create_table "menta_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -62,7 +71,7 @@ ActiveRecord::Schema.define(version: 2022_01_12_053035) do
 
   create_table "nones", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menta_id"
-    t.string "user_id"
+    t.string "client_id"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,7 +79,7 @@ ActiveRecord::Schema.define(version: 2022_01_12_053035) do
 
   create_table "reviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menta_id"
-    t.string "user_id"
+    t.string "client_id"
     t.integer "star"
     t.string "comment"
     t.datetime "created_at", null: false
@@ -83,23 +92,14 @@ ActiveRecord::Schema.define(version: 2022_01_12_053035) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "uuid"
+  create_table "users", primary_key: "uuid", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "mail"
     t.date "birth"
-    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mail"], name: "index_users_on_mail", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
-  end
-
-  create_table "users_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "user_id"
-    t.string "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
