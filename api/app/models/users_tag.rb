@@ -1,2 +1,0 @@
-class UsersTag < ApplicationRecord
-end
