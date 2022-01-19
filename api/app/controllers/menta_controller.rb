@@ -1,19 +1,26 @@
 class MentaController < ApplicationController
     def index
-        menta = Mentum.find_by(uuid: params[uuid])
-        render json: menta
+        if menta = Mentum.joins(:user).select(:name, :uuid, :profile, :url).find_by(uuid: params[:uuid])
+            render json: {
+                user_category: "menta",
+                name: menta.name,
+                uuid: menta.uuid,
+                profile: menta.profile,
+                url: menta.url
+            }
+        else
+            render json: {error: "not exist"}
+        end
     end
 
     def create
-        if user = User.find_by(uuid: create_menta_param[:uuid])
-        else
+        mentum = Mentum.find_by(uuid: create_menta_param[:uuid])
+        user = User.find_by(uuid: create_menta_param[:uuid])
+        if Client.find_by(uuid: create_menta_param[:uuid]).nil? && mentum.nil?
             user = User.create(create_menta_param)
+            mentum = Mentum.create(uuid: user.uuid)
         end
-        if menta = Mentum.find_by(uuid: create_menta_param[:uuid])
-        else
-            menta = Mentum.create(create_menta_param)
-        end
-        render json: menta
+        render json: {mentum: mentum, user: user}
     end
 
     private
