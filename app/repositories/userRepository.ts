@@ -3,8 +3,8 @@ import Repository from "./Repository";
 const resouce: string = "/users";
 
 export default {
-  get() {
-    return Repository.get(`${resouce}`);
+  get(payload: Object) {
+    return Repository.get(`${resouce}`, payload);
   },
   post(payload: Object) {
     return Repository.post(`${resouce}`, payload);
