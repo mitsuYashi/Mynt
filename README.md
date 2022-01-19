@@ -5,10 +5,12 @@
 
 <!-- ` docker-compose run --rm front sh -c "yarn" ` -->
 
-` docker-compose up `
-
 ` docker-compose run --rm api sh -c "rails db:create" `
 
 ` docker-compose run --rm api sh -c "rails db:migrate" `
+
+` docker-compose run --rm api sh -c "rails db:seed" `
+
+` docker-compose up `
 
 ` docker-compose down `
