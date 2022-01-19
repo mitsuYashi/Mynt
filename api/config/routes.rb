@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   resources :example
   resources :users
   resources :menta
-  resources :like
+  resources :clients
+  resources :likes
   resources :tags
   resources :menta_tags
   resources :users_tags
