@@ -4,8 +4,6 @@
 ```
 docker-compose build 
 
-;; <!-- ` docker-compose run --rm front sh -c "yarn" ` -->
-
 docker-compose run --rm api sh -c "rails db:drop"
 
 docker-compose run --rm api sh -c "rails db:create"
