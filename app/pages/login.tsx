@@ -7,7 +7,7 @@ import { firebase } from "../components/firebase";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
-const clientRepository = RepositoryFactory.get("client");
+const clientRepository = RepositoryFactory.get("clients");
 const mentaRepository = RepositoryFactory.get("menta");
 
 const Login: NextPage = () => {
