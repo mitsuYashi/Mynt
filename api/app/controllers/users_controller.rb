@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
     def index
-        if user = User.eager_load(:mentum).eager_load(:client)
-            render json: user
+        unless user = Mentum.joins(:user).select(:name, :profile, :birth, :url).find_by(user_id: params[:uuid])
+            user = Client.joins(:user).find_by(user_id: params[:uuid])
         end
+        render json: user
     end
 
     def create
