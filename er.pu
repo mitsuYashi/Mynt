@@ -14,7 +14,7 @@ class users {
 '/
 
 class client {
-    + uuid : String(32)
+    + user_id : String(32)
     ---
     status : Boolen()
     timestamp : Datetime()
@@ -26,7 +26,7 @@ class client {
 '/
 
 class menta {
-    + uuid : String(32)
+    + user_id : String(32)
     ---
     profile : String(1024)
     url : String(124)
