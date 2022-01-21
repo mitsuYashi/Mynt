@@ -1,6 +1,6 @@
 class MentaController < ApplicationController
     def index
-        if menta = Mentum.joins(:user).select(:name, :uuid, :profile, :url).find_by(uuid: params[:uuid])
+        if menta = Mentum.joins(:user).select(:name, :user_id, :profile, :url).find_by(user_id: params[:uuid])
             render json: {
                 user_category: "menta",
                 name: menta.name,
@@ -14,11 +14,11 @@ class MentaController < ApplicationController
     end
 
     def create
-        mentum = Mentum.find_by(uuid: create_menta_param[:uuid])
+        mentum = Mentum.find_by(user_id: create_menta_param[:uuid])
         user = User.find_by(uuid: create_menta_param[:uuid])
-        if Client.find_by(uuid: create_menta_param[:uuid]).nil? && mentum.nil?
+        if Client.find_by(user_id: create_menta_param[:uuid]).nil? && mentum.nil?
             user = User.create(create_menta_param)
-            mentum = Mentum.create(uuid: user.uuid)
+            mentum = Mentum.create(user_id: user.uuid)
         end
         render json: {mentum: mentum, user: user}
     end

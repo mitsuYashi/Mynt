@@ -7,7 +7,7 @@ const repositories = {
   users: userRepository,
   menta: mentaRepository,
   match: matchRepository,
-  client: clientRepository,
+  clients: clientRepository,
 };
 
 type Value<T, U extends keyof T> = T[U];
