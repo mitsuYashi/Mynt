@@ -1,6 +1,6 @@
 import Repository from "./Repository";
 
-const resouce: string = "/client";
+const resouce: string = "/clients";
 
 export default {
   get(payload: Object) {
