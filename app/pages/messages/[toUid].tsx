@@ -8,6 +8,7 @@ import { ParsedUrlQuery } from "querystring";
 
 import { RepositoryFactory } from "../../repositories/RepositoryFactory";
 const userRepository = RepositoryFactory.get("users");
+const messageRepository = RepositoryFactory.get("messages");
 
 interface Params extends ParsedUrlQuery {
   toUid: string;
@@ -15,16 +16,31 @@ interface Params extends ParsedUrlQuery {
 
 const Messages: NextPage = () => {
   const router = useRouter();
+  
+  const userGet = async (uuid: string) => {
+    const res = await userRepository.get({
+      params: {
+        uuid: uuid,
+      },
+    });
+    return res.data;
+  };
+
+  const messageGet = async () => {
+    const res = await messageRepository.get({
+      params: {
+        
+      }
+    })
+  }
 
   useEffect(() => {
-    listenAuthState(firebase)
-      .then((uid) => {
-        const myUid = uid;
-        return userGet(myUid);
-      })
-      .then((result) => {
-        console.log(result[0]);
+    listenAuthState(firebase).then((uid) => {
+      const myUid = uid;
+      return userGet(myUid).then((result) => {
+        console.log(result);
       });
+    });
   }, []);
 
   useEffect(() => {
@@ -36,15 +52,6 @@ const Messages: NextPage = () => {
       });
     }
   }, [router]);
-
-  const userGet = async (uuid: string) => {
-    const res = await userRepository.get({
-      params: {
-        uuid: uuid,
-      },
-    });
-    return res.data;
-  };
 
   return (
     <div>
