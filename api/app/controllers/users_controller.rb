@@ -1,9 +1,18 @@
 class UsersController < ApplicationController
     def index
         unless user = Mentum.joins(:user).select(:name, :profile, :birth, :url).find_by(user_id: params[:uuid])
-            user = Client.joins(:user).find_by(user_id: params[:uuid])
+            user = Client.joins(:user).select(:name, :profile, :birth, :url).find_by(user_id: params[:uuid])
+            profile = {
+                user: user,
+                userType: "client"
+            }
+        else
+            profile = {
+                user: user,
+                userType: "menta"
+            }
         end
-        render json: user
+        render json: profile
     end
 
     def create
