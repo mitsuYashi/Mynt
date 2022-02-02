@@ -1,0 +1,2 @@
+class ClientsTagsController < ApplicationController
+end
