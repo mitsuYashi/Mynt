@@ -11,7 +11,7 @@ import { type } from "os";
 export const siteTitle = 'Mynt';
 
 type Props = {
-    siteTitle: string;
+    pageTitle: string;
 }
 
 const Layout: NextPage<Props> = ({children, pageTitle}: any) => {
