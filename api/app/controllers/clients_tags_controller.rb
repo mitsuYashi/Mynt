@@ -29,5 +29,5 @@ class ClientsTagsController < ApplicationController
   private
   def create_client_tag_param
       param.require(:client_tags).permit(:client_id, :tag_id)
-  end
+  end 
 end
