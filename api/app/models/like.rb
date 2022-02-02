@@ -1,4 +1,4 @@
 class Like < ApplicationRecord
-    belongs_to :mentum, foreign_key: "uuid"
-    belongs_to :client, foreign_key: "uuid"
+    has_many :mentum, foreign_key: "menta_id"
+    has_many :client, foreign_key: "client_id"
 end

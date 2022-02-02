@@ -1,5 +1,5 @@
 class Client < ApplicationRecord
-    belongs_to :users , foreign_key: "user_id", optional: true 
+    belongs_to :user , foreign_key: "user_id", optional: true 
     has_many :likes
     has_many :contracts
     has_many :nones

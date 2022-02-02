@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resources :menta_tags
   resources :users_tags
   resources :nones
+  resources :messages
 end
