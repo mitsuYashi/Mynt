@@ -5,7 +5,7 @@ class LikeController < ApplicationController
     end
 
     def create
-        if like = Like.where(user_id: create_like_param[:user_id], menta_id: create_like_param[:menta_id])
+        if like = Like.where(client_id: create_like_param[:client_id], menta_id: create_like_param[:menta_id])
             if like.status == false
                 like.update(status: true)
             else
@@ -18,6 +18,6 @@ class LikeController < ApplicationController
     private
 
     def create_like_param
-        params.require(:like).permit(:user_id, :menta_id)
+        params.require(:like).permit(:client_id, :menta_id)
     end
 end
