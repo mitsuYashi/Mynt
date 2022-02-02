@@ -1,4 +1,4 @@
 class MentaTag < ApplicationRecord
-    belongs_to :mentum, foreign_key: "uuid"
-    belongs_to :tags, foreign_key: "id"
+    belongs_to :mentum
+    belongs_to :tag
 end
