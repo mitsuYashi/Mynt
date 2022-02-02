@@ -6,9 +6,8 @@ import Router from "next/router";
 import Topnav from "../components/topnav";
 import Sidenav from "../components/sidenav";
 import Head from 'next/head';
-import { type } from "os";
 
-export const siteTitle = 'Mynt';
+const siteTitle = 'Mynt';
 
 type Props = {
     pageTitle: string;
@@ -19,7 +18,7 @@ const Layout: NextPage<Props> = ({children, pageTitle}: any) => {
         <>
             <Head>
                 <link rel="icon" href='/favicon.ico'/>
-                <meta name='og:title' content={siteTitle} />
+                <title>{siteTitle}</title>
             </Head>
             <header>
                 <Topnav currentpage={pageTitle}/>
