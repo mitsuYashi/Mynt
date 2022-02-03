@@ -7,7 +7,7 @@ type Props = {
     currentpage: string;
 }
 
-const Topnav: NextPage<Props> = ({currentpage}) => {
+const TopNav: NextPage<Props> = ({currentpage}) => {
 
     const searchButton = () => {
         console.log("検索処理");
@@ -25,4 +25,4 @@ const Topnav: NextPage<Props> = ({currentpage}) => {
     );
 };
 
-export default Topnav;
+export default TopNav;
