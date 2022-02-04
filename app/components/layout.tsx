@@ -1,10 +1,11 @@
-import axios from "axios";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import Router from "next/router";
-
 import TopNav from "./TopNav";
 import SideNav from "./SideNav";
+import { css } from '@emotion/react'
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Router from "next/router";
 import Head from 'next/head';
 
 const siteTitle = 'Mynt';
@@ -21,13 +22,22 @@ const Layout: NextPage<Props> = ({userType, pageTitle, children}: any) => {
                 <link rel="icon" href='/favicon.ico'/>
                 <title>{siteTitle}</title>
             </Head> */}
-            <header>
+            <div css={bodyContent}>
                 <SideNav userType={userType} />
-                <TopNav currentpage={pageTitle}/>
-            </header>
-            <main>{children}</main>
+                <div className="mainContent">
+                    <TopNav currentpage={pageTitle}/>
+                    <main>{children}</main>
+                </div>
+            </div>
         </>
     )
 }
+
+const bodyContent = css({
+    backgroundColor: '#EAEDF2',
+    width: '100vw',
+    minWidth: '1080px',
+    height: '100vh'
+});
 
 export default Layout;
