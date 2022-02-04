@@ -71,3 +71,22 @@ Tag.create!([
     {name: '理科'},
     {name: '社会'}
 ])
+
+# MentaTag.create!([
+#     {
+#         menta_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
+#         tag_id: 1
+#     },
+#     {
+#         menta_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
+#         tag_id: 2
+#     },
+#     {
+#         menta_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
+#         tag_id: 3
+#     },
+#     {
+#         menta_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
+#         tag_id: 4
+#     },
+# ])

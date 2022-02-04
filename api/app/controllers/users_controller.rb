@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     def index
-        unless user = Mentum.joins(:user).select(:name, :profile, :birth, :url).find_by(user_id: params[:uuid])
-            user = Client.joins(:user).select(:name, :profile, :birth, :url).find_by(user_id: params[:uuid])
+        unless user = Mentum.joins(:user).select(:name, :profile, :birth, :url, :user_id).find_by(user_id: params[:uuid])
+            user = Client.joins(:user).select(:name, :birth, :user_id).find_by(user_id: params[:uuid])
             profile = {
                 user: user,
                 userType: "client"
