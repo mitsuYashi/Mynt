@@ -16,7 +16,7 @@ const Favorite: NextPage = () => {
     });
   }, []);
 
-  return <Layout pageTitle="FAVORITE" userType="client"></Layout>;
+  return <Layout pageTitle="SEARCH" userType="client"></Layout>;
 };
 
 export default Favorite;
