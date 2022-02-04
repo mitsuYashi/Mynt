@@ -1,32 +1,46 @@
-import axios from "axios";
 import type { NextPage } from "next";
+import TopNav from "./TopNav";
+import SideNav from "./SideNav";
+import { css } from "@emotion/react";
+
+import axios from "axios";
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import Head from "next/head";
 
-import Topnav from "../components/topnav";
-import Sidenav from "../components/sidenav";
-import Head from 'next/head';
-
-const siteTitle = 'Mynt';
+const siteTitle = "Mynt";
 
 type Props = {
-    pageTitle: string;
-}
+  userType: string;
+  pageTitle: string;
+};
 
-const Layout: NextPage<Props> = ({children, pageTitle}: any) => {
-    return (
-        <>
-            <Head>
-                <link rel="icon" href='/favicon.ico'/>
-                <title>{siteTitle}</title>
-            </Head>
-            <header>
-                <Topnav currentpage={pageTitle}/>
-                <Sidenav/>
-            </header>
-            <main>{children}</main>
-        </>
-    )
-}
+const classes = {
+  bodyContent: css`
+    background-color: #eaedf2;
+    width: 75vw;
+    min-width: 670px;
+    margin-left: 25%;
+    height: 100vh;
+  `,
+};
+
+const Layout: NextPage<Props> = ({ userType, pageTitle, children }: any) => {
+  return (
+    <>
+      {/* <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>{siteTitle}</title>
+      </Head> */}
+      <div css={classes.bodyContent}>
+        <SideNav userType={userType} />
+        <div className="mainContent">
+          <TopNav currentpage={pageTitle} />
+          <main>{children}</main>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Layout;

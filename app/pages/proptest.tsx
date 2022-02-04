@@ -16,7 +16,7 @@ import Router from "next/router";
 
 
 import {firebase, listenAuthState} from "../components/firebase";
-import Topnav from "../components/topnav";
+import Topnav from "../components/TopNav";
 
 interface State {
   num: number[];
