@@ -13,11 +13,18 @@ type Props = {
 const classes = {
   li: css`
     list-style: none;
-    margin-top: 56px;
+    margin-top: 36px;
+    padding: 7px 30px 5px 20px;
     font-size: 24px;
     cursor: pointer;
+    border-radius: 40px;
+    outline: .5px solid;
+    outline-color: transparent;
+    outline-offset: 12px;
+    transition: .8s;
     &:hover {
-      opacity: 0.5;
+      outline-color: #ddd;
+      outline-offset: 0px;
     }
   `,
   img: css`

@@ -31,7 +31,7 @@ const classes = {
   `,
   ul: css`
     padding: 0;
-    width: 150px;
+    min-width: 170px;
   `,
 };
 
