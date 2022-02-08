@@ -18,9 +18,8 @@ type Props = {
 const classes = {
   bodyContent: css`
     background-color: #eaedf2;
-    width: 75vw;
     min-width: 670px;
-    margin-left: 25%;
+    padding-left: 25%;
     height: 100vh;
   `,
 };
