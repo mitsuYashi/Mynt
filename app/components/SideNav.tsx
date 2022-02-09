@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 type props = {
   userType: string;
+  uid: string;
 };
 
 const classes = {
@@ -35,7 +36,7 @@ const classes = {
   `,
 };
 
-const SideNav: NextPage<props> = ({ userType }) => {
+const SideNav: NextPage<props> = ({ userType, uid }) => {
   return (
     <div css={classes.sideNavBody} className="sideNav">
       <div css={classes.center}>
@@ -77,7 +78,7 @@ const SideNav: NextPage<props> = ({ userType }) => {
           <SideNavMenu
             pageTitle="PROFILE"
             pageIcon="/images/profileIcon.png"
-            pageLink="/profile"
+            pageLink={`/profile/${uid != null ? uid: null}`}
           />
         </ul>
       </div>

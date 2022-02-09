@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { css } from "@emotion/react";
 import Image from "next/image";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -13,10 +13,11 @@ const classes = {
     width: 70vw;
     min-width: 655px;
     position: fixed;
-    top: 3%;
+    top: 20px;
     right: 0%;
     margin: 0;
-  `,
+    z-index: 1;
+    `,
   topNav: css`
     width: 70vw;
     min-width: 655px;
@@ -25,6 +26,7 @@ const classes = {
     align-items: center;
     justify-content: space-between;
     border-radius: 12px 0 0 12px;
+    box-shadow: -2px 2px 1px 1px #ccc;
     margin: 0;
     background-color: #fff;
   `,
@@ -58,7 +60,8 @@ const classes = {
 };
 
 const TopNav: NextPage<Props> = ({ currentpage }) => {
-  const searchButton = () => {
+  const searchButton: MouseEventHandler = (e) => {
+    e.preventDefault();
     console.log("検索処理");
   };
 

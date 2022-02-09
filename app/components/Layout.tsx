@@ -7,6 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import Head from "next/head";
+import { firebase, listenAuthState } from "./firebase";
 
 const siteTitle = "Mynt";
 
@@ -20,23 +21,31 @@ const classes = {
     background-color: #eaedf2;
     min-width: 670px;
     padding-left: 25%;
-    height: 100vh;
+    height: 100%;
+  `,
+  mainContent: css`
+    height: 100%;
   `,
 };
 
 const Layout: NextPage<Props> = ({ userType, pageTitle, children }: any) => {
+  const [myuid, setMyuid] = useState("");
+
+  useEffect(() => {
+    listenAuthState(firebase).then((uid) => {
+      const myUid = uid;
+      setMyuid(myUid);
+    });
+  }, []);
+
   return (
     <>
-      {/* <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <title>{siteTitle}</title>
-      </Head> */}
+      <nav>
+        <SideNav userType={userType} uid={myuid != null ? myuid : "404"} />
+        <TopNav currentpage={pageTitle} />
+      </nav>
       <div css={classes.bodyContent}>
-        <SideNav userType={userType} />
-        <div className="mainContent">
-          <TopNav currentpage={pageTitle} />
-          <main>{children}</main>
-        </div>
+        <main css={classes.mainContent}>{children}</main>
       </div>
     </>
   );
