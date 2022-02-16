@@ -10,11 +10,17 @@ const likeRepository = RepositoryFactory.get("like");
 const noneRepository = RepositoryFactory.get("nones");
 
 
+<<<<<<< HEAD
 import { firebase, listenAuthState } from "../components/firebase";
 
 import Layout from "../components/Layout";
 import ClientHomeDisplay from "./home/ClientHomeDisplay";
 import MentaHomeDisplay from "./home/MentaHomeDisplay";
+=======
+import {firebase, listenAuthState} from "../components/firebase";
+import Topnav from "../components/TopNav";
+import Sidenav from "../components/SideNav";
+>>>>>>> main
 
 interface State {
   num: number[];
@@ -79,7 +85,7 @@ const Home: NextPage/*<users, menta>*/ = () => {
   };
 
   return (
-    <Layout pageTitle="HOME">
+    <Layout pageTitle="HOME" userType="client">
       {
         userType == "client" ?
         <ClientHomeDisplay /> :
