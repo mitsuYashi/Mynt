@@ -1,4 +1,4 @@
 class MentaTag < ApplicationRecord
-    belongs_to :mentum
-    belongs_to :tag
+    has_many :mentum, dependent: :destroy
+    has_many :tag, dependent: :destroy
 end
