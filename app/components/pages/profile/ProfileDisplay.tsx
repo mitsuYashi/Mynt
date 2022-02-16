@@ -24,7 +24,7 @@ const classes = {
     right: 0%;
     width: 70vw;
     height: 100%;
-    /* min-height: 80vh; */
+    min-height: 80vh;
     min-width: 655px;
     margin: 0 0 0 auto;
     border-radius: 12px 0 0 12px;
@@ -61,7 +61,7 @@ const classes = {
     color: #fff;
   `,
   back: css`
-    padding: 50px 0 30px 0;
+    padding: 50px 0 20px 0;
     background-color: #ffffff;
     border-radius: 12px;
   `,
@@ -78,6 +78,7 @@ const ProfileDisplay: React.VFC<Props> = ({ userData, userType, myuid }) => {
           height="1"
           css={classes.profImg}
         />
+        {/* {console.log(userData)} */}
         <div css={classes.name}>{userData.name}</div>
       </div>
       <div css={classes.back}>

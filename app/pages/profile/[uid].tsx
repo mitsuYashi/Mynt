@@ -56,7 +56,9 @@ const Profile: NextPage = () => {
 
   return (
     <Layout pageTitle="PROFILE" userType="client">
-      <ProfileDisplay userData={userData} userType={userType} myuid={myuid} />
+      {userData.user_id != null ? (
+        <ProfileDisplay userData={userData} userType={userType} myuid={myuid} />
+      ) : null}
     </Layout>
   );
 };
