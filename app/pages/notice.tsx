@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 
 const Notice: NextPage = () => {
 

@@ -1,6 +1,6 @@
 import Repository from "./Repository";
 
-const resouce: string = "/like";
+const resouce: string = "/likes";
 
 export default {
   get(payload: Object) {

@@ -3,8 +3,8 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 
-import Topnav from "../components/topnav";
-import Sidenav from "../components/sidenav";
+import Topnav from "./Topnav";
+import Sidenav from "./Sidenav";
 import Head from 'next/head';
 
 const siteTitle = 'Mynt';
