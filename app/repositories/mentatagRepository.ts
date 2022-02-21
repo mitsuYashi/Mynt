@@ -3,7 +3,7 @@ import Repository from "./Repository";
 const resouce: string = "/menta_tags";
 
 export default {
-  get(payload: Object) {
+  get(payload: Object | null) {
     return Repository.get(`${resouce}`, payload);
   },
   post(payload: Object) {
