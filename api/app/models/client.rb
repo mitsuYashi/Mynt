@@ -4,5 +4,5 @@ class Client < ApplicationRecord
     has_many :contracts
     has_many :nones
     has_many :reviews
-    has_many :client_tags
+    # has_many :client_tags
 end

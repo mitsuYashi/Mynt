@@ -4,5 +4,5 @@ class Mentum < ApplicationRecord
     has_many :contracts
     has_many :nones
     has_many :reviews
-    has_many :menta_tag
+    # has_many :menta_tag
 end
