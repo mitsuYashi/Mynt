@@ -26,12 +26,9 @@ const classes = {
     height: 100%;
     min-height: 80vh;
     min-width: 655px;
-    margin: 0 0 0 auto;
-    border-radius: 12px 0 0 12px;
 
     width: 68vw;
-    /* margin: 0 1vw 0 auto; */
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
     border-radius: 12px;
 
     z-index: 0;
