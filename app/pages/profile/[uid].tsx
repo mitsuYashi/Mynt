@@ -35,28 +35,27 @@ const Profile: NextPage = () => {
   const [myuid, setMyuid] = useState<string>("");
   const [userType, setUserType] = useState<string>("");
   const [userData, setUserData] = useState(initialState.userData);
+  
+  const userGet = async (uid: string) => {
+    const res = await userRepository.get({
+      params: {
+        uuid: uid,
+      },
+    });
+    setUserData(res.data.user);
+    setUserType(res.data.userType);
+  };
 
   useEffect(() => {
     listenAuthState(firebase).then((uid) => {
       setMyuid(uid);
     });
-    const userGet = async (uid: string) => {
-      const res = await userRepository.get({
-        params: {
-          uuid: uid,
-        },
-      });
-      // console.log(res.data);
-
-      setUserData(res.data.user);
-      setUserType(res.data.userType);
-    };
     typeof router.query.uid === "string" ? userGet(router.query.uid) : null;
   }, [router]);
 
   return (
     <Layout pageTitle="PROFILE" userType="client">
-      {userData.user_id != null ? (
+      {userData?.user_id != null ? (
         <ProfileDisplay userData={userData} userType={userType} myuid={myuid} />
       ) : null}
     </Layout>
