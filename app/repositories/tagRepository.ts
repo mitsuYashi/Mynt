@@ -1,6 +1,6 @@
 import Repository from "./Repository";
 
-const resouce: string = "/client_tags";
+const resouce: string = "/tags";
 
 export default {
   get(payload: Object) {

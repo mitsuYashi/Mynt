@@ -50,17 +50,7 @@ const classes = {
 
 const ClientProfileDisplay: React.FC<Props> = ({ userData }) => {
   return (
-    <div css={classes.main}>
-      <div css={classes.coverImg}>
-        <img
-          src="../images/user.jpg"
-          alt=""
-          width="1"
-          height="1"
-          css={classes.profImg}
-        />
-      </div>
-    </div>
+    <div></div>
   );
 };
 

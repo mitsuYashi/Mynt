@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_113643) do
+ActiveRecord::Schema.define(version: 2022_02_18_083441) do
 
   create_table "client_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "client_id"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 2022_01_19_113643) do
   create_table "menta_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menta_id"
     t.string "tag_id"
-    t.string "experience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

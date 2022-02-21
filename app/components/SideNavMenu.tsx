@@ -44,7 +44,8 @@ const SideNavMenu: NextPage<Props> = ({
         <span css={classes.img}>
           <Image src={pageIcon} width={27} height={27} css={classes.img} />
         </span>
-        {pageTitle}
+        <a href={pageLink}>{pageTitle}</a>
+        {/* {pageTitle} */}
       </li>
     </Link>
   );

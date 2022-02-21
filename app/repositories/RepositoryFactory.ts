@@ -7,6 +7,7 @@ import mentatagRepository from "./mentatagRepository";
 import usertagRepository from "./usertagRepository";
 import likeRepository from "./likeRepository";
 import noneRepository from "./noneRepository";
+import tagRepository from "./tagRepository";
 
 const repositories = {
   users: userRepository,
@@ -14,10 +15,11 @@ const repositories = {
   match: matchRepository,
   clients: clientRepository,
   messages: messageRepository,
-  menta_tags: mentatagRepository,
-  users_tags: usertagRepository,
+  mentaTags: mentatagRepository,
+  usersTags: usertagRepository,
   like: likeRepository,
   nones: noneRepository,
+  tags: tagRepository,
 };
 
 type Value<T, U extends keyof T> = T[U];

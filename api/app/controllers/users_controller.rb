@@ -1,23 +1,37 @@
 class UsersController < ApplicationController
     def index
-        unless user = Mentum.joins(:user).select(:name, :profile, :birth, :url, :user_id).find_by(user_id: params[:uuid])
+        if user = Mentum.joins(:user).select(:name, :profile, :birth, :url, :user_id).find_by(user_id: params[:uuid])
+            profile = {
+                user: user,
+                userType: "menta"
+            }
+        else
             user = Client.joins(:user).select(:name, :birth, :user_id).find_by(user_id: params[:uuid])
             profile = {
                 user: user,
                 userType: "client"
-            }
-        else
-            profile = {
-                user: user,
-                userType: "menta"
             }
         end
         render json: profile
     end
 
     def create
-        if user = User.find_by(uuid: params[:uuid]).nil?
-            user = User.create(uuid: params[:uuid], name: params[:name], mail: params[:mail])
+
+    end
+
+    def update
+        if update_user_param[:userType] == "menta"
+            user = User.find_by(uuid: params[:id])
+            mentum = Mentum.find_by(user_id: params[:id])
+            user.update(name: update_user_param[:name], birth: update_user_param[:birth])
+            mentum.update(profile: update_user_param[:profile], url: update_user_param[:url])
+            render json: { status: "menta update" }
+        elsif update_user_param[:userType] == "client"
+            user = User.find_by(uuid: params[:id])
+            client = Client.find_by(user_id: params[:id])
+
+            user.update(name: update_user_param[:name], birth: update_user_param[:birth])
+            render json: { status: "client update" }
         end
     end
 
@@ -25,6 +39,10 @@ class UsersController < ApplicationController
     
     def create_user_param
         params.require(:user).permit(:uuid, :name, :mail)
+    end
+
+    def update_user_param
+        params.require(:user).permit(:userType, :name, :birth, :profile, :url)
     end
 
 end

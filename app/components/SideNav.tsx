@@ -41,7 +41,7 @@ const SideNav: NextPage<props> = ({ userType, uid }) => {
     <div css={classes.sideNavBody} className="sideNav">
       <div css={classes.center}>
         <Link href="/home">
-          <a css={classes.a}>
+          <a css={classes.a} href="/home">
             <Image src="/images/logo.svg" width={250} height={75} alt="ロゴ" />
           </a>
         </Link>
@@ -78,7 +78,7 @@ const SideNav: NextPage<props> = ({ userType, uid }) => {
           <SideNavMenu
             pageTitle="PROFILE"
             pageIcon="/images/profileIcon.png"
-            pageLink={`/profile/${uid != null ? uid: null}`}
+            pageLink={`/profile/${uid != null ? uid: ""}`}
           />
         </ul>
       </div>
