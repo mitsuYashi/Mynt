@@ -75,7 +75,6 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
   const getTags = async () => {
     const res = await tagRepository.get({
       params: {
-        userType: userType,
         uuid: userData.user_id,
       },
     });
@@ -107,7 +106,7 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
       },
     });
     // console.log(res);
-    Router.push("./");
+    // Router.push("./");
   };
 
   const deleteTag =
