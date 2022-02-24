@@ -6,7 +6,7 @@ class UsersController < ApplicationController
                 userType: "menta"
             }
         else
-            user = Client.joins(:user).select(:name, :birth, :user_id).find_by(user_id: params[:uuid])
+            user = Client.joins(:user).select(:name, :profile, :birth, :user_id).find_by(user_id: params[:uuid])
             profile = {
                 user: user,
                 userType: "client"
@@ -31,6 +31,7 @@ class UsersController < ApplicationController
             client = Client.find_by(user_id: params[:id])
 
             user.update(name: update_user_param[:name], birth: update_user_param[:birth])
+            client.update(profile: update_user_param[:profile])
             render json: { status: "client update" }
         end
     end

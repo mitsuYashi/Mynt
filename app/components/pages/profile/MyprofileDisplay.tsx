@@ -75,14 +75,17 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
   const getTags = async () => {
     const res = await tagRepository.get({
       params: {
-        userType: userType,
         uuid: userData.user_id,
       },
     });
     setTags(res.data.tag);
-
     setSelectedTags(res.data.myTags);
-    console.log(res.data);
+    let newTags: number[] = [];
+    res.data.myTags.map((data: { id: number }) => (
+      newTags.push(data.id)
+    ));
+    setMyTags(newTags);
+    console.log(newTags);
   };
 
   const handleSubmit = () => {
@@ -105,6 +108,20 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
     // console.log(res);
     // Router.push("./");
   };
+
+  const deleteTag =
+    (chipToDelete: { name: string; id: number; }) => () => {
+      // const items = Object.keys(myTags);
+      let newTags = [...myTags];
+
+      setSelectedTags((chips) =>
+        chips != null
+          ? chips.filter((chip) => chip.id !== chipToDelete.id)
+          : null
+      );
+      newTags = newTags.filter((chip) => chip !== chipToDelete.id);
+      setMyTags(newTags);
+    };
 
   useEffect(() => {
     if (userType == "menta" || userType == "client") {
@@ -141,7 +158,14 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
         />
         <Stack spacing={1} direction="row" style={{ margin: "30px 0 0 0" }}>
           {selectedTags?.map((tag, index) => {
-            return <Chip variant="outlined" label={`${tag.name}`} />;
+            return (
+              <Chip
+                variant="outlined"
+                label={`${tag.name}`}
+                onDelete={deleteTag(tag)}
+                key={index}
+              />
+            );
           })}
         </Stack>
         <Stack spacing={3} sx={{ width: 500 }} css={classes.textfield}>
@@ -152,10 +176,14 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
             getOptionLabel={(tags) => tags.name}
             onChange={(e, newValue) => {
               let newTags: number[] = [];
-              newValue.map((val) => newTags.push(val.id));
-              selectedTags?.map((val) =>
-                newTags.indexOf(val.id) != -1 ? newTags.push(val.id) : null
+              newValue.map((val) =>
+                newTags.indexOf(val.id) === -1 ? newTags.push(val.id) : null
               );
+              selectedTags?.map((val) =>
+                newTags.indexOf(val.id) === -1 ? newTags.push(val.id) : null
+              );
+              // console.log(selectedTags);
+              console.log(newTags);
               setMyTags(newTags);
             }}
             renderInput={(params) => (
@@ -211,7 +239,7 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
           style={{ margin: "30px 0 0 0" }}
           width="100%"
           height="544"
-          src={`https://www.youtube.com/embed/${userData.url}`}
+          src={`https://www.youtube.com/embed/${url}`}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
