@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import Image from "next/image";
 import React, { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 type Props = {
   currentpage: string;
@@ -61,18 +62,28 @@ const classes = {
   `,
 };
 
+
 const TopNav: NextPage<Props> = ({ currentpage }) => {
   const searchButton: MouseEventHandler = (e) => {
     e.preventDefault();
     console.log("検索処理");
   };
 
+  const tagGet = async (uuid: ) => {
+    
+  }() => {
+
+  }
+
+  const res = await axios.get('/users')
+  console.log(res.data)
+
   return (
     <div css={classes.topNavFixed}>
       <div css={classes.topNav}>
         <h2 css={classes.h2}>{currentpage}</h2>
         <form css={classes.search}>
-          <input css={classes.input} type="text" placeholder="検索" />
+          <input css={classes.input} id="search" name="name" type="text" placeholder="検索" />
           <button css={classes.inputButton} onClick={searchButton}>
             <Image src={"/images/searchIcon.png"} width={25} height={25} />
           </button>
