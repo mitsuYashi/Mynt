@@ -28,22 +28,20 @@ const classes = {
   `,
 };
 
-const Layout: NextPage<Props> = ({ pageTitle, children }: any) => {
+const Layout: NextPage<Props> = ({ userType, pageTitle, children }: any) => {
   const [myuid, setMyuid] = useState("");
-  const [userType, setUserType] = useState("client");
 
   useEffect(() => {
     listenAuthState(firebase).then((uid) => {
       const myUid = uid;
       setMyuid(myUid);
-      
     });
   }, []);
 
   return (
     <>
       <nav>
-        <SideNav userType={userType} uid={myuid != null ? myuid : ""} />
+        <SideNav userType={userType} uid={myuid != null ? myuid : "404"} />
         <TopNav currentpage={pageTitle} />
       </nav>
       <div css={classes.bodyContent}>
