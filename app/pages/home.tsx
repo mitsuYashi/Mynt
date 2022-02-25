@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
 const userRepository = RepositoryFactory.get("users");
-const mentatagRepository = RepositoryFactory.get("menta_tags");
-const usertagRepository = RepositoryFactory.get("users_tags");
+const mentatagRepository = RepositoryFactory.get("mentaTags");
+const usertagRepository = RepositoryFactory.get("usersTags");
 const likeRepository = RepositoryFactory.get("like");
 const noneRepository = RepositoryFactory.get("nones");
 

@@ -53,6 +53,7 @@ Mentum.create!([
     {
         user_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
         profile: 'なんでもできます。整体、画像処理、ブログ運営。',
+        url: 'mY3KApEk7zQ',
         status: true
     }
 ])
