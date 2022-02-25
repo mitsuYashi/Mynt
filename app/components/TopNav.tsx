@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import { css } from "@emotion/react";
-import Image from "next/image";
-import React, { MouseEventHandler } from "react";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import Search from "./Search";
 
 type Props = {
   currentpage: string;
@@ -37,57 +35,16 @@ const classes = {
     margin-left: 80px;
     font-size: 32px;
   `,
-  search: css`
-    width: 30%;
-    min-width: 230px;
-    height: 45%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: 8%;
-  `,
-  input: css`
-    width: 80%;
-    min-width: 184px;
-    height: 100%;
-    border: none;
-    border-radius: 32px;
-    padding-left: 32px;
-    background-color: #eaedf2;
-  `,
-  inputButton: css`
-    height: 100%;
-    border: none;
-    background-color: #fff;
-  `,
 };
 
 
-const TopNav: NextPage<Props> = ({ currentpage }) => {
-  const searchButton: MouseEventHandler = (e) => {
-    e.preventDefault();
-    console.log("検索処理");
-  };
-
-  const tagGet = async (uuid: ) => {
-    
-  }() => {
-
-  }
-
-  const res = await axios.get('/users')
-  console.log(res.data)
-
+const TopNav: NextPage<Props> = ({ currentpage, props}: any) => {
+  const search = props;
   return (
     <div css={classes.topNavFixed}>
       <div css={classes.topNav}>
         <h2 css={classes.h2}>{currentpage}</h2>
-        <form css={classes.search}>
-          <input css={classes.input} id="search" name="name" type="text" placeholder="検索" />
-          <button css={classes.inputButton} onClick={searchButton}>
-            <Image src={"/images/searchIcon.png"} width={25} height={25} />
-          </button>
-        </form>
+        <Search search={search}/>
       </div>
     </div>
   );
