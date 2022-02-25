@@ -48,11 +48,13 @@ Mentum.create!([
     {
         user_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
         profile: '実務経験ありません！教えるのが好きです！地雷ですがぜひ',
+        url: '9PnCSI8ndws',
         status: true
     },
     {
         user_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
         profile: 'なんでもできます。整体、画像処理、ブログ運営。',
+        url: 'mY3KApEk7zQ',
         status: true
     }
 ])
