@@ -47,30 +47,39 @@ Client.create!([
 Mentum.create!([
     {
         user_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
-        profile: '実務経験ありません！教えるのが好きです！地雷ですがぜひ',
+        profile: '# プログラミングをメインで教えています。',
         status: true
     },
     {
         user_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
         profile: 'なんでもできます。整体、画像処理、ブログ運営。',
+        url: 'mY3KApEk7zQ',
         status: true
     }
 ])
 
-Tag.create!([
-    {name: 'プログラミング'},
-    {name: 'ブログ'},
-    {name: 'ピアノ'},
-    {name: 'ギター'},
-    {name: 'その他楽器'},
-    {name: '経営学'},
-    {name: '勉強方法'},
-    {name: '国語'},
-    {name: '数学'},
-    {name: '英語'},
-    {name: '理科'},
-    {name: '社会'}
-])
+Client.create!(user_id: 'WIDb0GUn44YzQnoSqwuhNBaCw6o2', profile: '# ピアノのMENTAを探しています\n○○を弾けるようになりましたが、これ以上の独学は厳しいと感じMENTAを探し始めました。\n\n## 予算\n月2万までの方にお願いしたいです。\n\n## 目標\nトルコ行進曲を弾けるようになりたいです。脱初心者を目指しています。\n\nその他詳細については話し合っていきたいです。')
+
+tags = [
+    'プログラミング',
+    'ブログ',
+    'ピアノ',
+    'ギター',
+    'その他楽器',
+    '経営学',
+    '勉強方法',
+    '国語',
+    '数学',
+    '英語',
+    '理科',
+    '社会'
+]
+
+tags.length.times do |i|
+    Tag.create!(
+        name: tags[i]
+    )
+end
 
 MentaTag.create!([
     {
@@ -90,3 +99,6 @@ MentaTag.create!([
         tag_id: 4
     },
 ])
+
+Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "WIDb0GUn44YzQnoSqwuhNBaCw6o2")
+Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "qUHkEWAUioTMU57TuCyDVJ9pj1l2")

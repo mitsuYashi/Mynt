@@ -1,7 +1,12 @@
 class MentaTagsController < ApplicationController
     def index
-        menta_tag = Menta_tag.where(params[:menta_id])
-        render json: menta_tag
+        menta_tag = MentaTag.select(:tag_id).where(menta_id: params[:menta_id])
+        tag_name = []
+        menta_tag.each do |val|
+            tag_name.push(Tag.select(:name, :id).find_by(id: val.tag_id))
+            # tag_name.push(val)
+        end
+        render json: tag_name
     end
 
     def create

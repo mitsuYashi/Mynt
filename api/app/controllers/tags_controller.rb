@@ -1,13 +1,13 @@
 class TagsController < ApplicationController
   def index
     tag = Tag.all()
-    if params[:userType] == "menta"
+    if user = Mentum.find_by(user_id: params[:uuid])
       tag_id = MentaTag.select(:tag_id).where(menta_id: params[:uuid])
       tag_name = []
       tag_id.each do |val|
         tag_name.push(Tag.find(val.tag_id))
       end
-    elsif params[:userType] == "client"
+    elsif user = Client.find_by(user_id: params[:uuid])
       tag_id = ClientTag.select(:tag_id).where(client_id: params[:uuid])
       tag_name = []
       tag_id.each do |val|

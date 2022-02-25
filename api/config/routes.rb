@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :menta
   resources :clients
   resources :likes
+  resources :contracts
+  resources :favorites
   resources :tags
   resources :menta_tags
   resources :users_tags
