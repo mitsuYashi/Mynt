@@ -1,4 +1,4 @@
 class ClientTag < ApplicationRecord
-    belongs_to :tag, foreign_key: "tag_id"
-    belongs_to :client, foreign_key: "client_id"
+    # has_many :tag, foreign_key: "tag_id"
+    # has_many :client, foreign_key: "client_id"
 end

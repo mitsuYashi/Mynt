@@ -26,7 +26,9 @@ const classes = {
     align-items: center;
     justify-content: space-between;
     border-radius: 12px 0 0 12px;
-    box-shadow: -2px 2px 1px 1px #ccc;
+    /* box-shadow: -2px 2px 1px 1px #ccc; */
+    border: 1px solid #eaedf2;
+    /* border-right: #fff; */
     margin: 0;
     background-color: #fff;
   `,
