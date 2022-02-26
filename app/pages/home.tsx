@@ -13,8 +13,8 @@ const noneRepository = RepositoryFactory.get("nones");
 import { firebase, listenAuthState } from "../components/firebase";
 
 import Layout from "../components/Layout";
-// import ClientHomeDisplay from "./home/ClientHomeDisplay";
-// import MentaHomeDisplay from "./home/MentaHomeDisplay";
+import ClientHomeDisplay from "../components/pages/home/ClientHomeDisplay";
+// import MentaHomeDisplay from "../components/pages/home/MentaHomeDisplay";
 
 interface State {
   num: number[];
