@@ -1,16 +1,18 @@
 class NonesController < ApplicationController
   def create
-    if none = None.find_by(client_id: create_none_param[:client_id], menta_id: create_none_param[:menta_id])
-      none.create(date: now.next_month)
+    if none = None.find_by(create_none_param)
+      # none.create(date: now.next_month)
     else
       none = None.create(create_none_param)
       none.update(date: DateTime.now.next_month)
+      like = Like.find_by(create_none_param)
+      like.update(status: false)
     end
-    render json: none
+    render json: like
   end
 
   def destroy
-    if nones = None.where(client_id: create_none_param[:client_id])
+    if nones = None.where(client_id: params[:id])
       nones.each do |none|
         none.delete()
       end
