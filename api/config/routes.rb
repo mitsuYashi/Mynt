@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :users_tags
   resources :nones
   resources :messages
+  resources :homes
 end
