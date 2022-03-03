@@ -100,7 +100,7 @@ const Home: NextPage = () => {
             user.email ? user.email : "",
             user.displayName ? user.displayName : "unknown"
           );
-          Router.push("/home");
+          Router.push("/profile");
         }
       })
       .catch((err) => {
@@ -123,7 +123,7 @@ const Home: NextPage = () => {
             user.email ? user.email : "",
             user.displayName ? user.displayName : "unknown"
           );
-          Router.push("/home");
+          Router.push("/profile");
         }
       })
       .catch((err) => {
