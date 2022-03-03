@@ -30,6 +30,12 @@ User.create!([
         name: 'goto',
         mail: 'gotori.21.25@gmail.com',
         birth: '2000-12-05'
+    },
+    {
+        uuid: 'WIDb0GUn44YzQnoSqwuhNBaCw6o2',
+        name: '軽簿奈良',
+        mail: 'karubonaraoisiiyone@gmail.com',
+        birth: '2001-10-27'
     }
 ])
 
@@ -47,12 +53,13 @@ Client.create!([
 Mentum.create!([
     {
         user_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
-        profile: '# プログラミングをメインで教えています。',
+        profile: '# プログラミングをメインで教えています。月一のzoom面談で一か月3万を目安に受け付けています。',
+        url: 'xretmRp4Mjs',
         status: true
     },
     {
         user_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
-        profile: 'なんでもできます。整体、画像処理、ブログ運営。',
+        profile: '# なんでもできます。整体、画像処理、ブログ運営。あらゆることお任せください。料金は応相談です。',
         url: 'mY3KApEk7zQ',
         status: true
     }
@@ -98,7 +105,11 @@ MentaTag.create!([
         menta_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
         tag_id: 4
     },
+    {
+        menta_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
+        tag_id: 1
+    }
 ])
 
-Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "WIDb0GUn44YzQnoSqwuhNBaCw6o2")
-Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "qUHkEWAUioTMU57TuCyDVJ9pj1l2")
+Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "WIDb0GUn44YzQnoSqwuhNBaCw6o2", status: false)
+Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "qUHkEWAUioTMU57TuCyDVJ9pj1l2", status: false)
