@@ -1,12 +1,6 @@
 import axios from "axios";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import {
-  ChangeEvent,
-  FormEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import Router, { useRouter } from "next/router";
 
 import {
@@ -22,7 +16,7 @@ import { ParsedUrlQuery } from "querystring";
 import Layout from "../../components/Layout";
 import ClientMessageDisplay from "../../components/pages/messages/UserMessageDisplay";
 import { css } from "@emotion/react";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 const userRepository = RepositoryFactory.get("users");
 const messageRepository = RepositoryFactory.get("messages");
@@ -48,6 +42,7 @@ type State = {
     name: string;
     birth: string;
     profile: string;
+    url: string;
   };
   tag: {
     name: string;
@@ -63,8 +58,7 @@ const classes = {
     position: relative;
     top: 125px;
     right: 0%;
-    /* width: 70vw; */
-    height: 100%;
+    height: 80vh;
     min-height: 80vh;
     min-width: 655px;
 
@@ -84,10 +78,11 @@ const classes = {
     padding: 10px;
     border-radius: 12px;
     background-color: #fff;
+    /* height: 100%; */
   `,
   messageFlex: css`
     overflow-y: scroll;
-    height: 500px;
+    height: 65vh;
   `,
   myMessage: css`
     display: block;
@@ -119,22 +114,12 @@ const classes = {
 
 const Messages: NextPage = () => {
   const router = useRouter();
-  const messageRef = useRef<HTMLInputElement>(null);
   const [newMessage, setNewMessage] = useState<string>("");
   const [myUid, setMyuid] = useState("");
   const [toUid, setToUid] = useState("");
   const [myProfile, setMyprofile] = useState([]);
   const [sendProfile, setSendProfile] = useState<State>();
   const [messages, setMessages] = useState<messages[]>([]);
-
-  const userGet = async (uuid: string) => {
-    const res = await userRepository.get({
-      params: {
-        uuid: uuid,
-      },
-    });
-    return res.data;
-  };
 
   const messageUserGet = async () => {
     const res = await messageRepository.get({
@@ -143,7 +128,7 @@ const Messages: NextPage = () => {
         uid_second: toUid,
       },
     });
-    console.log(res.data);
+    // console.log(res.data);
     // res.data === "" ? router.push("../home") : null;
     setMyprofile(res.data.myProfile);
     setSendProfile(res.data.sendProfile);
@@ -151,10 +136,6 @@ const Messages: NextPage = () => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    // if (messageRef.current?.value != null && messageRef.current.value != "") {
-    //   addMessage(myUid, toUid, messageRef.current?.value);
-    //   messageRef.current.value = "";
-    // }
 
     if (newMessage != null && newMessage != "") {
       addMessage(myUid, toUid, newMessage);
@@ -180,7 +161,7 @@ const Messages: NextPage = () => {
     const res = myUid !== "" && toUid !== "" ? messageUserGet() : null;
     // リアルタイムアップデート
     if (res != null) {
-      console.log(myUid);
+      // console.log(myUid);
       const userIds = [myUid, toUid].sort();
       const id = userIds[0] + userIds[1];
       const unsubscribe = onSnapshot(collection(db, id), (querySnapshot) => {
@@ -191,7 +172,7 @@ const Messages: NextPage = () => {
           return a.created_at.seconds < b.created_at.seconds ? -1 : 1;
         });
         setMessages(result);
-        console.log(result);
+        // console.log(result);
       });
       return unsubscribe;
     }
@@ -203,23 +184,21 @@ const Messages: NextPage = () => {
         <div css={classes.messageBack}>
           <div>
             <div css={classes.messageFlex}>
-              {/* {console.log(messages)} */}
               {messages.map((str, index) => {
-                console.log(str.user);
-                return (
+                return str.user == myUid ? (
                   <div css={classes.myMessage} key={index}>
                     {str.message}
                   </div>
+                ) : (
+                  <div css={classes.sendMessage} key={index}>{str.message}</div>
                 );
               })}
-              {/* <div css={classes.sendMessage}>aaaaaa</div> */}
             </div>
           </div>
           <form onSubmit={handleSubmit} style={{ borderTop: "1px solid #eee" }}>
-            {/* <input type="text" ref={messageRef} /> */}
             <TextField
               id="standard-multiline-static"
-              // label="Multiline"
+              autoFocus
               placeholder="メッセージを入力"
               rows={4}
               variant="standard"
@@ -227,13 +206,7 @@ const Messages: NextPage = () => {
               onChange={(e) => {
                 setNewMessage(e.target.value);
               }}
-              onKeyPress={(e: React.KeyboardEvent<HTMLDivElement>) => {
-                if (e.key === "Enter") {
-                  // エンターキー押下時の処理
-                  (e.currentTarget as unknown as HTMLTextAreaElement).value =
-                    "";
-                }
-              }}
+              value={newMessage}
               style={{ margin: "30px 0 0 0" }}
             />
             {/* <input type="submit" value="送信" /> */}
@@ -243,6 +216,7 @@ const Messages: NextPage = () => {
           <ClientMessageDisplay
             sendProfile={sendProfile.user}
             tag={sendProfile.tag}
+            myuid={myUid}
           />
         ) : null}
       </div>
