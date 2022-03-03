@@ -69,7 +69,7 @@ const ProfileDisplay: React.VFC<Props> = ({ userData, userType, myuid }) => {
     <div css={classes.main}>
       <div css={classes.coverImg}>
         <img
-          src="../images/user.jpg"
+          src="../images/user.svg"
           alt=""
           width="1"
           height="1"

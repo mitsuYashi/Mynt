@@ -14,7 +14,8 @@ import { firebase, listenAuthState } from "../components/firebase";
 
 import Layout from "../components/Layout";
 import ClientHomeDisplay from "../components/pages/home/ClientHomeDisplay";
-// import MentaHomeDisplay from "../components/pages/home/MentaHomeDisplay";
+// import ClientHomeDisplay from "./home/ClientHomeDisplay";
+// import MentaHomeDisplay from "./home/MentaHomeDisplay";
 
 interface State {
   num: number[];
@@ -36,26 +37,21 @@ type MentaData = {
   userType: string,
 }
 
-const initialState: State = {
-  num: [],
-};
-
 const Home: NextPage/*<users, menta>*/ = () => {
 
-  // let userdata: object = [];
   const [userdata, setUserdata] = useState<UserData | null>(null);
-  console.log("u", userdata);
+  // console.log("u", userdata);
   const [mentadata, setMentadata] = useState<MentaData | null>(null);
-  console.log("m", mentadata);
+  // console.log("m", mentadata);
 
   const [userType, setUserType] = useState("");
 
   useEffect(() => {
     listenAuthState(firebase).then((uid) => {
       const myUid = uid;
-      console.log(myUid);
+      // console.log(myUid);
       return userGet(myUid).then((result) => {
-        console.log(result);
+        // console.log(result);
       });
     });
   }, []);
@@ -67,11 +63,11 @@ const Home: NextPage/*<users, menta>*/ = () => {
           uuid: uuid,
         },
       });
-      console.log(res.data);
-      console.log(res.data.user.name);
+      // console.log(res.data);
+      // console.log(res.data.user.name);
       setUserdata(res.data.user);
       setUserType(res.data.userType);
-      console.log(res.data.userType);
+      // console.log(res.data.userType);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -84,7 +80,8 @@ const Home: NextPage/*<users, menta>*/ = () => {
         userType == "client" ?
         <ClientHomeDisplay /> :
         userType == "menta" ?
-        <MentaHomeDisplay /> :
+        // <MentaHomeDisplay /> :
+        null :
         null
       }
     </Layout>

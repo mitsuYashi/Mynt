@@ -9,6 +9,7 @@ import likeRepository from "./likeRepository";
 import noneRepository from "./noneRepository";
 import tagRepository from "./tagRepository";
 import contractRepository from "./contractRepository";
+import homesRepository from "./homesRepository";
 
 const repositories = {
   users: userRepository,
@@ -22,6 +23,7 @@ const repositories = {
   nones: noneRepository,
   tags: tagRepository,
   contracts: contractRepository,
+  home: homesRepository,
 };
 
 type Value<T, U extends keyof T> = T[U];

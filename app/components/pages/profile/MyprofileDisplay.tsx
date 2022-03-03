@@ -69,6 +69,7 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
   const [selectedTags, setSelectedTags] = useState<State["tags"] | null>([]);
   const [profile, setProfile] = useState(userData.profile);
   const [url, setUrl] = useState(userData.url);
+  // const [price, setPrice] = useState(userData.price);
 
   const [tags, setTags] = useState(initialState.tags);
 
@@ -81,9 +82,7 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
     setTags(res.data.tag);
     setSelectedTags(res.data.myTags);
     let newTags: number[] = [];
-    res.data.myTags.map((data: { id: number }) => (
-      newTags.push(data.id)
-    ));
+    res.data.myTags.map((data: { id: number }) => newTags.push(data.id));
     setMyTags(newTags);
     console.log(newTags);
   };
@@ -95,7 +94,6 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
         myTags: myTags,
       },
     });
-    console.log(resMyTags);
     const res = userRepository.update(userData.user_id, {
       user: {
         userType: userType,
@@ -109,19 +107,16 @@ const MyProfileDisplay: React.FC<Props> = ({ userData, userType }) => {
     // Router.push("./");
   };
 
-  const deleteTag =
-    (chipToDelete: { name: string; id: number; }) => () => {
-      // const items = Object.keys(myTags);
-      let newTags = [...myTags];
+  const deleteTag = (chipToDelete: { name: string; id: number }) => () => {
+    // const items = Object.keys(myTags);
+    let newTags = [...myTags];
 
-      setSelectedTags((chips) =>
-        chips != null
-          ? chips.filter((chip) => chip.id !== chipToDelete.id)
-          : null
-      );
-      newTags = newTags.filter((chip) => chip !== chipToDelete.id);
-      setMyTags(newTags);
-    };
+    setSelectedTags((chips) =>
+      chips != null ? chips.filter((chip) => chip.id !== chipToDelete.id) : null
+    );
+    newTags = newTags.filter((chip) => chip !== chipToDelete.id);
+    setMyTags(newTags);
+  };
 
   useEffect(() => {
     if (userType == "menta" || userType == "client") {

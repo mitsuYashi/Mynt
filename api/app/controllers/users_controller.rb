@@ -5,8 +5,7 @@ class UsersController < ApplicationController
                 user: user,
                 userType: "menta"
             }
-        else
-            user = Client.joins(:user).select(:name, :profile, :birth, :user_id).find_by(user_id: params[:uuid])
+        elsif user = Client.joins(:user).select(:name, :profile, :birth, :user_id).find_by(user_id: params[:uuid])
             profile = {
                 user: user,
                 userType: "client"
