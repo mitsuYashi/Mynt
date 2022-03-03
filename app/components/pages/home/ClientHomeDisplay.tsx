@@ -3,281 +3,283 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import { RepositoryFactory } from "../../../repositories/RepositoryFactory";
-const userRepository = RepositoryFactory.get("users");
-const mentatagRepository = RepositoryFactory.get("menta_tags");
-const usertagRepository = RepositoryFactory.get("users_tags");
+const homeRepository = RepositoryFactory.get("home");
 const likeRepository = RepositoryFactory.get("like");
 const noneRepository = RepositoryFactory.get("nones");
 
-import Image from 'next/image';
+import Image from "next/image";
 import { css } from "@emotion/react";
 
-
 import { firebase, listenAuthState } from "../../firebase";
+import { Button, ButtonGroup, Chip, IconButton } from "@mui/material";
+import ReactMarkdown from "react-markdown";
+import {
+  DeleteOutline,
+  Favorite,
+  StarBorderOutlined,
+} from "@mui/icons-material";
 
 const classes = {
-  contentWrap: css`
-  font-size: 1.2rem;
-  background-color: #fff;
-  width: 70vw;
-  height: 80vh;
-  min-width: 655px;
-  position: fixed;
-  right: 0%;
-  top: 125px;
-  border-radius: 12px 0 0 12px;
-  box-shadow: -2px 2px 1px 1px #ccc;
-  padding: 20px;
-  `,
-  table: css`
-  width: 68vw;
-  `,
-  icontd: css`
-  width: 150px;
-  height: 150px;
-  `,
-  icon: css`
-  `,
-  mentaNametd: css`
-  font-size: 1.5rem;
-  border-bottom: 2px solid #bbb;
-  `,
-  tagtd: css`
-  `,
-  tagdiv: css`
-  vertical-align: bottom;
-  border-bottom: 2px solid #bbb;
-  `,
-  tags: css`
-  display: inline-block;
-  padding: 5px 10px;
-  margin-right: 20px;
-  margin-bottom: 10px;
-  border: 1px solid #bbb;
-  border-radius: 20px;
-  background-color: #eaedf2;
-  box-shadow: -1px 1px 1px 1px #eee;
-  `,
-  url: css`
-  padding: 5px 0 5px 0;
-  `,
-  prof: css`
-  vertical-align: top;
-  height: auto;
-  padding-top: 5px;
-  `,
-  noneButton: css`
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  `,
-  likeButton: css`
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  `
-}
+  main: css`
+    background-color: #ffffff;
+    position: relative;
+    top: 125px;
+    right: 0%;
+    width: 70vw;
+    height: 100%;
+    min-height: 80vh;
+    min-width: 655px;
 
+    width: 68vw;
+    margin: 0 auto 10px auto;
+    border-radius: 12px;
 
+    z-index: 0;
+  `,
+  grid: css`
+    display: grid;
+    grid-column-start: 1;
+
+    grid-template-columns: 150px 1fr;
+    grid-template-areas:
+      "a b"
+      "a c";
+    /* grid-template-rows: 75px 75px; */
+    /* grid-auto-rows: 100px; */
+  `,
+  header: css`
+    width: 90%;
+    padding: 15px 0 0 0;
+    margin: 0px auto 0 auto;
+  `,
+  gridItem1: css`
+    grid-area: a;
+    /* width: 150px;
+    height: 150px; */
+    padding: 10px;
+    border-radius: 50%;
+  `,
+  gridItem2: css`
+    grid-area: b;
+    font-size: 1.7rem;
+    padding: 20px 0 0 0;
+  `,
+  gridItem3: css`
+    grid-area: c;
+  `,
+  profile: css`
+    width: 80%;
+    margin: 0 auto;
+  `,
+  // bottonWrap: css`
+  //   margin: 20px auto;
+  //   width: 250px;
+  // `,
+  flex: css`
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 50px;
+  `,
+  noUser: css`
+    position: relative;
+    top: 25vh;
+    font-size: 1.7rem;
+    text-align: center;
+  `,
+};
 
 interface State {
   num: number[];
 }
 
 type UserData = {
-  user_id: string,
-  name: string,
-  birth: string,
-}
+  user_id: string;
+  name: string;
+  birth: string;
+};
 
 type MentaData = {
-  user_id: string,
-  name: string,
-  birth: string,
-  profile: string,
-  url: string
-}
+  user_id: string;
+  name: string;
+  birth: string;
+  profile: string;
+  url: string;
+};
 
-type MentaTag = {
-  id: string,
-  name: string
-}[]
+type MentaTag =
+  | {
+      id: string;
+      name: string;
+    }[]
+  | null;
 
 const initialState: State = {
   num: [],
 };
 
-const ClientHomeDisplay: NextPage/*<users, menta>*/ = () => {
-
-  // let userdata: object = [];
-  const [userdata, setUserdata] = useState<UserData | null>(null);
-  console.log("u", userdata);
+const ClientHomeDisplay: NextPage = () => {
   const [mentadata, setMentadata] = useState<MentaData | null>(null);
-  console.log("m", mentadata);
-  const [mentatag, setMentatag] = useState<MentaTag | null>(null);
-
+  // console.log("m", mentadata);
+  const [mentatag, setMentatag] = useState<MentaTag>([]);
   const [userType, setUserType] = useState("");
-
   const [myuid, setMyuid] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     listenAuthState(firebase).then((uid) => {
-      const myUid = uid;
-      console.log(myUid);
-      setMyuid(myuid);
-      return userGet(myUid).then((result) => {
+      setMyuid(uid);
+      return mentaGet(uid).then((result) => {
         console.log(result);
       });
     });
   }, []);
-
-  const userGet = async (uuid: string) => {
-    try {
-      const res = await userRepository.get({
-        params: {
-          uuid: uuid,
-        },
-      });
-      console.log(res.data);
-      console.log(res.data.user.name);
-      setUserdata(res.data.user);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
-  useEffect(() => {
-    listenAuthState(firebase).then((uid) => {
-      const mentaId = 'tIIermrOnEaqrKLjbsxKQUGGBC33';
-      const menta_id = mentaId;
-      console.log(mentaId);
-      return mentaGet(mentaId).then((result) => {
-        console.log(result);
-      }), mentatagGet(menta_id).then((result) => {
-        console.log(result);
-      });
-    });
-  }, []);
-
 
   const mentaGet = async (uuid: string) => {
     try {
-      const res = await userRepository.get({
+      const res = await homeRepository.get({
         params: {
           uuid: uuid,
         },
       });
-      console.log(res.data);
-      console.log(res.data.user.name);
-      setMentadata(res.data.user);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const mentatagGet = async (menta_id: string) => {
-    try {
-      const res = await mentatagRepository.get({
-        params: {
-          menta_id: menta_id,
-        },
-      });
-      console.log(res.data);
-      setMentatag(res.data);
-      return res.data;
+      console.log(res.data.tags);
+      if (res.data.type == "like") {
+        Router.push(`/messages/${res.data.user.menta_id}`);
+      } else {
+        setType(res.data.type);
+        setMentadata(res.data.menta);
+        setMentatag(res.data.tags);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   const nonePost = async () => {
-    console.log('none');
-    const client_id = myuid;
-    const menta_id = 'tIIermrOnEaqrKLjbsxKQUGGBC33';
-    console.log(client_id, menta_id);
     try {
       const res = await noneRepository.post({
         none: {
-          client_id: client_id,
-          menta_id: menta_id,
+          client_id: myuid,
+          menta_id: mentadata?.user_id,
         },
       });
-      console.log(res.data);
-      return res.data;
+      mentaGet(myuid);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const favoritePost = async () => {};
+
   const likePost = async () => {
-    console.log('like');
-    const client_id = myuid;
-    const menta_id = 'tIIermrOnEaqrKLjbsxKQUGGBC33';
-    console.log(client_id, menta_id);
     try {
       const res = await likeRepository.post({
         like: {
-          client_id: client_id,
-          menta_id: menta_id,
-          status: true,
+          client_id: myuid,
+          menta_id: mentadata?.user_id,
+          status: "true",
         },
       });
       console.log(res.data);
-      return res.data;
+      Router.push(`/messages/${mentadata?.user_id}`);
     } catch (error) {
       console.log(error);
     }
   };
 
-    return  (
-    <div css={classes.contentWrap}>
-
+  return (
+    <div css={classes.main}>
+      {type == "noUser" ? (
+        <div css={classes.noUser}>
+          <p>表示できるユーザーがいません</p>
+          <p>検索機能をお試しください</p>
+          <Button variant="outlined" style={{ margin: "30px 0" }}>
+            searchへ
+          </Button>
+        </div>
+      ) : type == 'home' ? (
+        <>
+          <div css={classes.header}>
+            <div css={classes.grid}>
+              <div css={classes.gridItem1}>
+                <img
+                  src="/images/user.svg"
+                  width={130}
+                  height={130}
+                  style={{ borderRadius: "50%", border: "1px solid #eaedf2" }}
+                />
+              </div>
+              <div css={classes.gridItem2}>
+                {mentadata?.name ?? "Loading..."}
+              </div>
+              <div css={classes.gridItem3}>
+                {mentatag?.map((val, index) => {
+                  return (
+                    <Chip
+                      variant="outlined"
+                      label={`${val.name}`}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div css={classes.profile}>
+            <ReactMarkdown>{mentadata?.profile ?? "Loading..."}</ReactMarkdown>
+            {mentadata?.url != null ? (
+              <iframe
+                width="100%"
+                height="480"
+                src={`https://www.youtube.com/embed/${mentadata?.url}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            ) : null}
+          </div>
           <div>
-            <table css={classes.table}>
-              <tr>
-                <td rowSpan={2} css={classes.icontd}>
-                    <Image css={classes.icon} src="/images/user.jpg" width={130} height={130} />
-                </td>
-                <td>
-                  <div css={classes.mentaNametd}>
-                    {mentadata?.name ?? "Loading..."}
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td css={classes.tagtd}>
-                  <div css={classes.tagdiv}>
-                    {mentatag!=null?mentatag.map((value) => (
-                      <div css={classes.tags}><a href="#">{value.name}</a></div>
-                    )):null}
-                  </div>
-                </td>
-              </tr>
-                <tr>
-                  <td colSpan={2} css={classes.url}>
-                    <iframe width="480" height="270" src={`https://www.youtube.com/embed/${mentadata?.url}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2} css={classes.prof}>
-                    {mentadata?.profile ?? "Loading..."}
-                  </td>
-                </tr>
-            </table>
-          {/* 非表示ボタン */}
-          <div onClick={nonePost} css={classes.noneButton}>
-            <Image src="/images/none.png" width={70} height={70} />
+            <div css={classes.flex}>
+              <ButtonGroup
+                variant="outlined"
+                aria-label="outlined button group"
+              >
+                <IconButton
+                  size="large"
+                  onClick={nonePost}
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <DeleteOutline fontSize="inherit" />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  onClick={favoritePost}
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <StarBorderOutlined fontSize="inherit" />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  onClick={likePost}
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <Favorite fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
+            </div>
           </div>
-          {/* LIKEボタン */}
-          <div onClick={likePost} css={classes.likeButton}>
-            <Image src="/images/like.png" width={70} height={70} />
-          </div>
-          </div>
-
+        </>
+      ): null}
     </div>
-    );
+  );
 };
 
 export default ClientHomeDisplay;
