@@ -12,7 +12,7 @@ export default {
   // show(id: number) {
   //   return Repository.get(`${resouce}/${id}`);
   // },
-  // delete(id: number) {
-  //   return Repository.delete(`${resouce}/${id}`);
-  // },
+  delete(id: number) {
+    return Repository.delete(`${resouce}/${id}`);
+  },
 };
