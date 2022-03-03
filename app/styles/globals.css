@@ -6,6 +6,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: #eaedf2;
 }
+div::-webkit-scrollbar {
+  width: 7px;
+}
+div::-webkit-scrollbar-thumb {
+  background: linear-gradient(0deg, #49fddc, #7ec9c1);
+  border-radius: 3px;
+}
+div::-webkit-scrollbar-track {
+  background: rgb(220, 220, 220);
+  border-radius: 10px;
+}
 
 p {
   padding: 0;
