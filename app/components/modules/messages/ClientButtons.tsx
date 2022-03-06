@@ -216,7 +216,7 @@ const ClientButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
             </DialogActions>
           </Dialog>
           <Tooltip
-            title="MENTAが確定した場合押せるようになります"
+            title="MENTAが料金を確定した場合押せるようになります"
             placement="top"
           >
             <span>
