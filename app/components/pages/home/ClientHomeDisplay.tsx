@@ -193,7 +193,7 @@ const ClientHomeDisplay: NextPage = () => {
         <div css={classes.noUser}>
           <p>表示できるユーザーがいません</p>
           <p>検索機能をお試しください</p>
-          <Button variant="outlined" style={{ margin: "30px 0" }}>
+          <Button variant="outlined" style={{ margin: "30px 0" }} onClick={() => {Router.push("/search")}}>
             searchへ
           </Button>
         </div>

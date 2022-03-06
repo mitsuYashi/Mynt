@@ -5,10 +5,11 @@ class NonesController < ApplicationController
     else
       none = None.create(create_none_param)
       none.update(date: DateTime.now.next_month)
-      like = Like.find_by(create_none_param)
-      like.update(status: false)
+      if like = Like.find_by(create_none_param)
+        like.update(status: false)
+      end
     end
-    render json: like
+    render json: none
   end
 
   def destroy
