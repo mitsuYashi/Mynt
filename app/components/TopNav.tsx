@@ -1,11 +1,32 @@
 import type { NextPage } from "next";
 import { css } from "@emotion/react";
 import Image from "next/image";
-import React, { MouseEventHandler } from "react";
-import { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { Autocomplete, TextField } from "@mui/material";
+
+import { RepositoryFactory } from "../repositories/RepositoryFactory";
+import { firebase, listenAuthState } from "./firebase";
+const tagRepository = RepositoryFactory.get("tags");
 
 type Props = {
   currentpage: string;
+};
+
+type State = {
+  tags: {
+    name: string;
+    id: number;
+  }[];
+};
+const initialState: State = {
+  tags: [
+    {
+      name: "",
+      id: 0,
+    },
+  ],
 };
 
 const classes = {
@@ -17,7 +38,7 @@ const classes = {
     right: 0%;
     margin: 0;
     z-index: 1;
-    `,
+  `,
   topNav: css`
     width: 70vw;
     min-width: 655px;
@@ -62,21 +83,67 @@ const classes = {
 };
 
 const TopNav: NextPage<Props> = ({ currentpage }) => {
-  const searchButton: MouseEventHandler = (e) => {
-    e.preventDefault();
-    console.log("検索処理");
+  const router = useRouter();
+  const [tags, setTags] = useState(initialState.tags);
+  const [searchId, setSearchId] = useState<number>();
+  const [searchName, setSearchName] = useState<string>();
+
+  useEffect(() => {
+    listenAuthState(firebase).then((uid) => {
+      getTags(uid);
+    });
+  }, []);
+
+  const searchButton: MouseEventHandler = () => {
+    router.push(`/search?id=${searchId}`);
+  };
+
+  const getTags = async (uid: string) => {
+    const res = await tagRepository.get({
+      params: {
+        uuid: uid,
+      },
+    });
+    setTags(res.data.tag);
   };
 
   return (
     <div css={classes.topNavFixed}>
       <div css={classes.topNav}>
         <h2 css={classes.h2}>{currentpage}</h2>
-        <form css={classes.search}>
-          <input css={classes.input} type="text" placeholder="検索" />
-          <button css={classes.inputButton} onClick={searchButton}>
-            <Image src={"/images/searchIcon.png"} width={25} height={25} />
-          </button>
-        </form>
+        <div css={classes.search}>
+          {router.pathname == "/search" ? null : (
+            <>
+              <Autocomplete
+                disablePortal
+                autoHighlight
+                id="tags-standard"
+                options={tags}
+                getOptionLabel={(tags) => tags.name}
+                onChange={(e, newValue) => {
+                  setSearchId(newValue?.id);
+                  setSearchName(newValue?.name);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="SEARCH"
+                    style={{ borderRadius: "12px" }}
+                    size="small"
+                  />
+                )}
+                sx={{ width: "80%" }}
+              />
+              <button
+                css={classes.inputButton}
+                onClick={searchButton}
+                style={{ cursor: "pointer" }}
+              >
+                <Image src={"/images/searchIcon.png"} width={25} height={25} />
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
