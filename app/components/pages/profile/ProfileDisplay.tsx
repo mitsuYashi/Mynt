@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import React from "react";
-import ClientProfileDisplay from "./ClientProfileDisplay";
-import MentaProfileDisplay from "./MentaProfileDisplay";
+import DetailProfile from "./DetailProfile";
 import MyProfileDisplay from "./MyprofileDisplay";
 
 type Props = {
@@ -81,11 +80,9 @@ const ProfileDisplay: React.VFC<Props> = ({ userData, userType, myuid }) => {
       <div css={classes.back}>
         {myuid == userData.user_id ? (
           <MyProfileDisplay userData={userData} userType={userType} />
-        ) : userType == "client" ? (
-          <ClientProfileDisplay userData={userData} />
-        ) : userType == "menta" ? (
-          <MentaProfileDisplay userData={userData} />
-        ) : null}
+        ) : (
+          <DetailProfile userData={userData} userType={userType} />
+        )}
       </div>
     </div>
   );
