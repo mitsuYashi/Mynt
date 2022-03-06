@@ -4,55 +4,42 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
 const userRepository = RepositoryFactory.get("users");
-const mentatagRepository = RepositoryFactory.get("mentaTags");
-const usertagRepository = RepositoryFactory.get("usersTags");
-const likeRepository = RepositoryFactory.get("like");
-const noneRepository = RepositoryFactory.get("nones");
-
 
 import { firebase, listenAuthState } from "../components/firebase";
 
 import Layout from "../components/Layout";
 import ClientHomeDisplay from "../components/pages/home/ClientHomeDisplay";
-// import ClientHomeDisplay from "./home/ClientHomeDisplay";
-// import MentaHomeDisplay from "./home/MentaHomeDisplay";
+import MentaHomeDisplay from "../components/pages/home/MentaHomeDisplay";
 
 interface State {
   num: number[];
 }
 
 type UserData = {
-  user_id: string,
-  name: string,
-  birth: string,
-  userType: string,
-}
+  user_id: string;
+  name: string;
+  birth: string;
+  userType: string;
+};
 
 type MentaData = {
-  user_id: string,
-  name: string,
-  birth: string,
-  profile: string,
-  url: string,
-  userType: string,
-}
+  user_id: string;
+  name: string;
+  birth: string;
+  profile: string;
+  url: string;
+  userType: string;
+};
 
-const Home: NextPage/*<users, menta>*/ = () => {
-
+const Home: NextPage /*<users, menta>*/ = () => {
   const [userdata, setUserdata] = useState<UserData | null>(null);
-  // console.log("u", userdata);
   const [mentadata, setMentadata] = useState<MentaData | null>(null);
-  // console.log("m", mentadata);
 
   const [userType, setUserType] = useState("");
 
   useEffect(() => {
     listenAuthState(firebase).then((uid) => {
-      const myUid = uid;
-      // console.log(myUid);
-      return userGet(myUid).then((result) => {
-        // console.log(result);
-      });
+      userGet(uid);
     });
   }, []);
 
@@ -63,12 +50,9 @@ const Home: NextPage/*<users, menta>*/ = () => {
           uuid: uuid,
         },
       });
-      // console.log(res.data);
-      // console.log(res.data.user.name);
+      console.log(res.data)
       setUserdata(res.data.user);
       setUserType(res.data.userType);
-      // console.log(res.data.userType);
-      return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -76,53 +60,13 @@ const Home: NextPage/*<users, menta>*/ = () => {
 
   return (
     <Layout pageTitle="HOME" userType="client">
-      {
-        userType == "client" ?
-        <ClientHomeDisplay /> :
-        userType == "menta" ?
-        // <MentaHomeDisplay /> :
-        null :
-        null
-      }
+      {userType == "client" ? (
+        <ClientHomeDisplay />
+      ) : userType == "menta" ? (
+        <MentaHomeDisplay />
+      ) : null}
     </Layout>
-  ) 
+  );
 };
 
 export default Home;
-
-// (
-//   <div>
-
-//     {/* データテスト */}
-//     <div>
-//       <div>{userdata?.name ?? "Loading..."}</div>
-//       <div>{userdata?.birth ?? "Loading..."}</div>
-//       <div>{userdata?.user_id ?? "Loading..."}</div>
-
-//       <div>{mentadata?.name ?? "Loading..."}</div>
-//       <div>{mentadata?.birth ?? "Loading..."}</div>
-//       <div>{mentadata?.profile ?? "Loading..."}</div>
-//       <div>{mentadata?.url ?? "Loading..."}</div>
-//       <div>{mentadata?.user_id ?? "Loading..."}</div>
-//     </div>
-
-//   {/* メインコンテンツ */}
-//     <div>
-//       {/* アイコン */}
-//       <div>/////アイコン/////</div>
-//       {/* メンタの名前 */}
-//       <div>{mentadata?.name ?? "Loading..."}</div>
-//       {/* タグのリスト */}
-//       <div>/////タグリスト/////</div>
-//       {/* 添付URL */}
-//       <div>{mentadata?.url ?? "Loading..."}</div>
-//       {/* プロフィール(ポートフォリオ) */}
-//       <div>{mentadata?.profile ?? "Loading..."}</div>
-//       {/* 非表示ボタン */}
-//       <div onClick={None}>非表示</div>
-//       {/* LIKEボタン */}
-//       <div onClick={Like}>LIKE</div>
-//     </div>
-
-//   </div>
-// );
