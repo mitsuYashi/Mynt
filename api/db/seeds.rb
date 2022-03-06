@@ -53,19 +53,31 @@ Client.create!([
 Mentum.create!([
     {
         user_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
-        profile: '# プログラミングをメインで教えています。月一のzoom面談で一か月3万を目安に受け付けています。',
-        url: 'xretmRp4Mjs',
+        profile: '# プログラミングをメインで教えています。
+月一のzoom面談で一か月3万を目安に受け付けています。',
+        url: 'ZRo8aN8GjwI',
         status: true
     },
     {
         user_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
-        profile: '# なんでもできます。整体、画像処理、ブログ運営。あらゆることお任せください。料金は応相談です。',
+        profile: '# なんでもできます。整体、画像処理、ブログ運営。あらゆることお任せください。
+料金は応相談です。',
         url: 'mY3KApEk7zQ',
         status: true
     }
 ])
 
-Client.create!(user_id: 'WIDb0GUn44YzQnoSqwuhNBaCw6o2', profile: '# ピアノのMENTAを探しています\n○○を弾けるようになりましたが、これ以上の独学は厳しいと感じMENTAを探し始めました。\n\n## 予算\n月2万までの方にお願いしたいです。\n\n## 目標\nトルコ行進曲を弾けるようになりたいです。脱初心者を目指しています。\n\nその他詳細については話し合っていきたいです。')
+Client.create!(
+    user_id: 'WIDb0GUn44YzQnoSqwuhNBaCw6o2', 
+    profile: '# ピアノのMENTAを探しています
+○○を弾けるようになりましたが、これ以上の独学は厳しいと感じMENTAを探し始めました。
+## 予算
+月2万までの方にお願いしたいです。
+## 目標
+トルコ行進曲を弾けるようになりたいです。脱初心者を目指しています。
+
+その他詳細については話し合っていきたいです。'
+)
 
 tags = [
     'プログラミング',
@@ -111,5 +123,3 @@ MentaTag.create!([
     }
 ])
 
-Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "WIDb0GUn44YzQnoSqwuhNBaCw6o2", status: false)
-Like.create!(menta_id: "tIIermrOnEaqrKLjbsxKQUGGBC33", client_id: "qUHkEWAUioTMU57TuCyDVJ9pj1l2", status: false)
