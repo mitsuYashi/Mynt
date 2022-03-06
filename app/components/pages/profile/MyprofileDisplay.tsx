@@ -9,7 +9,6 @@ import { Autocomplete, Button, Chip, Fab, Stack } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 
 import { RepositoryFactory } from "../../../repositories/RepositoryFactory";
-import Router from "next/router";
 
 const tagRepository = RepositoryFactory.get("tags");
 const userRepository = RepositoryFactory.get("users");
