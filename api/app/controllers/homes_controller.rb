@@ -1,7 +1,31 @@
 class HomesController < ApplicationController
     def index
+        # menta
+        if params[:userType] == "menta"
+            likes = Like.select(:id, :client_id).where(menta_id: params[:uuid], status: true)
+
+            clients = []
+            tag_ids = []
+            likes.each do |id| 
+                clients.push(Client.joins(:user).select(:name, :profile, :birth, :user_id).find_by(user_id: id.client_id))
+                tag_ids.push(ClientTag.select(:id,:tag_id, :client_id).where(client_id: id.client_id))
+            end
+        
+            tag_name = []
+            tag_ids.each do |id|
+                id.each do |user|
+                    tag = Tag.find(user.tag_id)
+                    tag_name.push([tag.name, user.client_id])
+                end
+            end
+
+        
+            render json:{ clients: clients, tag_name:tag_name}
+        
+    
+        # client
         # like済みdata
-        if like = Like.find_by(client_id: params[:uuid], status: true)
+        elsif like = Like.find_by(client_id: params[:uuid], status: true)
             render json: { type: "like", user: like }
         elsif contract = Contract.find_by(client_id: params[:uuid], status: true)
             render json: { type: "contract", user: contract }
@@ -62,11 +86,12 @@ class HomesController < ApplicationController
             end
             if mentus.nil?
                 render json: {type: "noUser"}
-            else
+            elsif mentus
                 render json: { type: "home", menta: mentus, tags: tag_name}
                 # render json: { mentus: mentus, mentasIds: mentaIds, mentusId:mentusId , none: noneUids, type: type}
             end
         end
-
     end
 end
+
+

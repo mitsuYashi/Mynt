@@ -121,7 +121,6 @@ const initialState: State = {
 
 const ClientHomeDisplay: NextPage = () => {
   const [mentadata, setMentadata] = useState<MentaData | null>(null);
-  // console.log("m", mentadata);
   const [mentatag, setMentatag] = useState<MentaTag>([]);
   const [userType, setUserType] = useState("");
   const [myuid, setMyuid] = useState("");
@@ -198,7 +197,7 @@ const ClientHomeDisplay: NextPage = () => {
             searchへ
           </Button>
         </div>
-      ) : type == 'home' ? (
+      ) : type == "home" ? (
         <>
           <div css={classes.header}>
             <div css={classes.grid}>
@@ -277,7 +276,7 @@ const ClientHomeDisplay: NextPage = () => {
             </div>
           </div>
         </>
-      ): null}
+      ) : null}
     </div>
   );
 };

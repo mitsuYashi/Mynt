@@ -30,6 +30,7 @@ const MentaButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
   const [openContract, setOpenContract] = useState(false);
   const [price, setPrice] = useState(0);
   const [contractStatus, setContractStatus] = useState("");
+  const [contractId, setContractId] = useState(0);
 
   const nonePost = async () => {
     try {
@@ -57,6 +58,20 @@ const MentaButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
         },
       });
       setContractStatus("unpaid");
+      setContractId(res.data.id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const contractEndPost = async () => {
+    try {
+      const res = await contractRepository.update(contractId, {
+        contract: {
+          status: "false",
+        },
+      });
+      setContractStatus("false");
     } catch (err) {
       console.log(err);
     }
@@ -114,7 +129,7 @@ const MentaButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
               setOpenContract(true);
             }}
           >
-            MENTA受諾
+            MENTA終了
           </Button>
           <Dialog
             open={openContract}
@@ -125,26 +140,14 @@ const MentaButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
             fullWidth
           >
             <DialogTitle id="alert-dialog-title">
-              {`${sendProfile.name} さんからの依頼を受諾します`}
+              {`${sendProfile.name} さんのMENTAを終了します`}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                料金を決めてください
+                終了した時点で料金が振り込まれます。<br />
+                契約を満了していない場合終了しないでください。<br />
+                不正が確認されたとき料金は振り込まれません。
               </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="price"
-                placeholder="0~"
-                type="number"
-                fullWidth
-                variant="standard"
-                autoComplete="off"
-                onChange={(e) => {
-                  setPrice(Number(e.target.value));
-                }}
-              />
             </DialogContent>
             <DialogActions>
               <Button
@@ -157,12 +160,12 @@ const MentaButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
               <Button
                 onClick={() => {
                   setOpenContract(false);
-                  contractPost();
+                  contractEndPost();
                 }}
                 autoFocus
                 color="error"
               >
-                確定
+                終了する
               </Button>
             </DialogActions>
           </Dialog>
