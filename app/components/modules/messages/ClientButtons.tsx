@@ -54,20 +54,18 @@ const ClientButtons: React.FC<Props> = ({ myuid, sendProfile }) => {
   };
 
   const contractGet = async () => {
-    setInterval(async () => {
-      try {
-        const res = await contractRepository.get({
-          params: {
-            client_id: myuid,
-          },
-        });
-        setContractId(res.data.id);
-        setContractStatus(res.data.status);
-        setPrice(res.data.price);
-      } catch (err) {
-        console.log(err);
-      }
-    }, 10000);
+    try {
+      const res = await contractRepository.get({
+        params: {
+          client_id: myuid,
+        },
+      });
+      setContractId(res.data.id);
+      setContractStatus(res.data.status);
+      setPrice(res.data.price);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const contractIntervalGet = () => {
