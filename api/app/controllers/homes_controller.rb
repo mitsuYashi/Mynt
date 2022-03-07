@@ -1,5 +1,6 @@
 class HomesController < ApplicationController
     def index
+        err = "none"
         # menta
         if params[:userType] == "menta"
             likes = Like.select(:id, :client_id).where(menta_id: params[:uuid], status: true)
@@ -38,26 +39,30 @@ class HomesController < ApplicationController
                 mentaIds = []
                 tags.map {|tag|
                     mentaId = MentaTag.select(:menta_id).where(tag_id: tag.tag_id).where.not(menta_id: noneUids.map{|id| id.menta_id})
-                    unless mentaId == []
+                    if mentaId != nil
                         mentaIds.push(mentaId)
                     end
                 }
 
-                if mentaIds != []
-                    mentusId = mentaIds[0].sample
-                    mentus = Mentum.joins(:user).select(:name, :profile, :birth, :url, :user_id).find_by(user_id: mentusId)
+                mentus = nil
+
+                if mentaIds != [[]]
+                    mentusId0 = mentaIds[0].sample
+                    mentus = Mentum.joins(:user).select(:name, :profile, :birth, :url, :user_id).find_by(user_id: mentusId0.menta_id)
+                    tag_id = MentaTag.where(menta_id: mentusId0.menta_id)
+                    tag_name = []
+                    tag_id.each do |val|
+                        tag_name.push(Tag.find(val.tag_id))
+                    end
+                    err = "err"
                 end
 
 
-                tag_id = MentaTag.where(menta_id: mentusId)
-                tag_name = []
-                tag_id.each do |val|
-                    tag_name.push(Tag.find(val.tag_id))
-                end
 
                 type = 0
 
                 if mentus.nil?
+                
                     menta = Mentum.select(:user_id).where.not(user_id: noneUids.map{|id| id.menta_id}).all
                     
                     mentusId = menta.sample
@@ -88,7 +93,7 @@ class HomesController < ApplicationController
                 render json: {type: "noUser"}
             elsif mentus
                 render json: { type: "home", menta: mentus, tags: tag_name}
-                # render json: { mentus: mentus, mentasIds: mentaIds, mentusId:mentusId , none: noneUids, type: type}
+                # render json: { mentus: mentus, mentaIds: mentaIds, mentusId:mentusId , none: noneUids, type: type, err: err}
             end
         end
     end
