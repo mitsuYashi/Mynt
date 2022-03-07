@@ -60,7 +60,7 @@ Mentum.create!([
 
 実績、その他活躍については下記の動画を参照してください。
 ## 予算
-月一のzoom面談で一か月 ** 1万 ** を目安に受け付けています。
+月一のzoom面談で一か月 1万 を目安に受け付けています。
 ',
         url: 'ZRo8aN8GjwI',
         status: true
@@ -137,8 +137,28 @@ tags = [
 ]
 
 tags.length.times do |i|
+    uuid = SecureRandom.uuid
     Tag.create!(
         name: tags[i]
+    )
+    User.create!(
+        uuid: uuid,
+        name: 'menta' << tags[i],
+        mail: 'mail' << tags[i] << '@gmail.com',
+        birth: '1999-03-07' 
+    )
+    Mentum.create!(
+        user_id: uuid,
+        profile: '# ' << tags[i] << '教えます
+## 予算
+月¥3000が目安です。
+詳細についてはchatで。',
+        url: 'V9E_qsUeT9Y',
+        status: true
+    )
+    MentaTag.create!(
+        menta_id: uuid,
+        tag_id: i + 1
     )
 end
 
@@ -149,7 +169,7 @@ MentaTag.create!([
     },
     {
         menta_id: 'tIIermrOnEaqrKLjbsxKQUGGBC33',
-        tag_id: 2
+        tag_id: 3
     },
     {
         menta_id: 'QyvvxGrvEoWnncTU5E9M4pbSCCI3',
