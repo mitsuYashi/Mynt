@@ -61,7 +61,7 @@ const SideNav: NextPage<props> = ({ userType, uid }) => {
             pageLink="/search"
           />
 
-          {userType == "client" ? (
+          {/* {userType == "client" ? (
             <SideNavMenu
               pageTitle="FAVORITE"
               pageIcon="/images/favoriteIcon.png"
@@ -73,7 +73,7 @@ const SideNav: NextPage<props> = ({ userType, uid }) => {
               pageIcon="/images/reviewIcon.png"
               pageLink="/review"
             />
-          )}
+          )} */}
 
           <SideNavMenu
             pageTitle="PROFILE"

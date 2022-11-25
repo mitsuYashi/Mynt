@@ -254,7 +254,7 @@ const ClientHomeDisplay: NextPage = () => {
                 >
                   <DeleteOutline fontSize="inherit" />
                 </IconButton>
-                <IconButton
+                {/* <IconButton
                   size="large"
                   onClick={favoritePost}
                   color="primary"
@@ -262,7 +262,7 @@ const ClientHomeDisplay: NextPage = () => {
                   component="span"
                 >
                   <StarBorderOutlined fontSize="inherit" />
-                </IconButton>
+                </IconButton> */}
                 <IconButton
                   size="large"
                   onClick={likePost}

@@ -198,14 +198,7 @@ const Home: NextPage = () => {
             Sign up with Google
           </Button>
         </div>
-        <div css={classes.block}>
-          <h2>ひとりぼっちじゃない</h2>
-          <p>あなたの興味のあることを、</p>
-          <p>あなただけでは終わらせない。</p>
-          <p>ひとりじゃわからない、できないもの</p>
-          <p></p>
-          <p></p>
-        </div>
+        
       </div>
       <footer>
         <div
